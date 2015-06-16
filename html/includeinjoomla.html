@@ -1,0 +1,33 @@
+<div class="container">
+<p>En esta página usted puede encontrar las herramientas para el control de asistencia y de entregas de los estudiantes de los estudiantes a las sesiones.</p>
+<hr id="system-readmore" />
+<br>
+<?php
+
+define( '_JEXEC', 1 );
+define('JPATH_BASE', dirname(__FILE__) );
+define( 'DS', DIRECTORY_SEPARATOR );
+
+require_once ( JPATH_BASE .DS.'includes'.DS.'defines.php' );
+require_once ( JPATH_BASE .DS.'includes'.DS.'framework.php' );
+
+$user = JFactory::getUser();
+?>
+<br>
+<p>Este el el acceso al sistema de registros de asistencia SigmaSAS, si desea puede ver un pequeño tutorial aquí: <a href="https://www.youtube.com/watch?v=F3QeRePOfdw">https://www.youtube.com/watch?v=F3QeRePOfdw</a></p>
+<p> <iframe width="560" height="315" src="https://www.youtube.com/embed/F3QeRePOfdw" frameborder="0" allowfullscreen></iframe></p>
+
+
+
+<form id = "frm_entrar" method = "POST" accept-charset="UTF-8" action="http://sigma.uniandes.edu.co/sigmasas/index.php">
+	<input type = "hidden" name= "userName" id= "userName" value = "<?php echo $user->username; ?>" />
+	<input type = "hidden" name= "serverurl" id= "serverurl" value = "http://moodleinstitucional.uniandes.edu.co" />
+	<input type = "hidden" name= "role" id= "role" value = "MONITOR" />
+	<input 
+		class="btn btn-default btn-sm" 
+		id = "submit_entrar" 
+		type = "submit" 
+		value="Entrar al sistema SigmaSAS" 
+		
+		/>
+</form>
