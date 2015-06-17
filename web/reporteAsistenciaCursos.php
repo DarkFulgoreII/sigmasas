@@ -48,7 +48,6 @@
 				{
 					$asistenciaestudiantecurso =  $helper->darAsistencias_por_estudianteSeccion($estudiante, $seccion);
 					
-
 					$sesionesTotales =0;
 					$sesionesAsiste = 0;
 					$sesionesJustificadas = 0;

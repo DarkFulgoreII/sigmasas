@@ -22,7 +22,7 @@
         <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/asistencia/asistenciaConsolidada.rptdesign" >Reporte consolidado de asistencias</a></li>
         <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/entregas/entregasConsolidadas.rptdesign" >Reporte consolidado de entregas</a></li> 
         <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/asistencia/tablaAsistenciaConsolidada.rptdesign" >Tabla consolidada de asistencia</a></li> 
-                             
+        <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/asistencia/reporteTotalAsistencia.rptdesign" >Reporte total de asistencia por grupo (versión preliminar)</a></li>                      
       </ul>
     </li>
     <?if(isset($_SESSION["role"] ) && $_SESSION["role"] == "ADMIN"):?>
