@@ -23,10 +23,9 @@
 		$cursos = $helper->darCursosAutorizados($username, $contenedor->get_curso_collection());
 
 		//paso 2: basado en los cursos, mirar que grupos se les dejan disponibles
-
 		$grupos = $helper->darGruposAutorizados($username, $contenedor->get_curso_collection());
+		
 		//paso 3: filtrar bloques
-
 		$bloques = $helper->filtrarBloquesAutorizados($cursos, $bloques);
 	}
 

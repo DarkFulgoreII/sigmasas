@@ -12,8 +12,8 @@
  		
 		//simple attributes
 		
-		var $login;
-		var $nombres;
+		var $login; // (varchar)
+		var $nombres; // (varchar)
 		
 		//collections
 		

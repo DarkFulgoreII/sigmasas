@@ -11,9 +11,11 @@
  		
 		//simple attributes
 		
-		var $nombre;
-		var $descripcion;
-		var $numerosemana;
+		var $nombre; // (varchar)
+		var $descripcion; // (varchar)
+		var $numerosemana; // (int)
+		var $tipo; // (varchar)
+		var $calificable; // (tinyint)
 		
 		//collections
 		
@@ -32,6 +34,8 @@
 		var $nombre_field="nombre";
 		var $descripcion_field="descripcion";
 		var $numerosemana_field="numerosemana";
+		var $tipo_field="tipo";
+		var $calificable_field="calificable";
 		
 		//relation table names
 		
@@ -56,6 +60,8 @@
 				$this->nombre = $this->db->f($this->nombre_field);
 				$this->descripcion = $this->db->f($this->descripcion_field);
 				$this->numerosemana = $this->db->f($this->numerosemana_field);
+				$this->tipo = $this->db->f($this->tipo_field);
+				$this->calificable = $this->db->f($this->calificable_field);
 				//elements
 				
 				return true;
@@ -82,6 +88,8 @@
 			$dbQuery .= $this->nombre_field.",";
 			$dbQuery .= $this->descripcion_field.",";
 			$dbQuery .= $this->numerosemana_field.",";
+			$dbQuery .= $this->tipo_field.",";
+			$dbQuery .= $this->calificable_field.",";
 			
 			$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
 			$dbQuery .= ") ";
@@ -90,6 +98,8 @@
 			$dbQuery .= " '$this->nombre',";
 			$dbQuery .= " '$this->descripcion',";
 			$dbQuery .= "  $this->numerosemana ,";
+			$dbQuery .= " '$this->tipo',";
+			if($this->calificable == false) $dbQuery .= "0,"; else $dbQuery .= "1,";
 			
 		   	
 		   	$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
@@ -125,6 +135,9 @@
 			$dbQuery .= "$this->nombre_field = '$this->nombre',";
 			$dbQuery .= "$this->descripcion_field = '$this->descripcion',";
 			$dbQuery .= "$this->numerosemana_field =  $this->numerosemana ,";
+			$dbQuery .= "$this->tipo_field = '$this->tipo',";
+			$dbQuery .= "$this->calificable_field = ";
+			if($this->calificable == false) $dbQuery .= "0,"; else $dbQuery .= "1,";
 			
 		   	
 		   	$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
@@ -178,6 +191,24 @@
 		function set_numerosemana($value)
 		{
 			$this->numerosemana = $value;
+		}
+		
+		function get_tipo()
+		{
+			return $this->tipo;
+		}
+		function set_tipo($value)
+		{
+			$this->tipo = $value;
+		}
+		
+		function get_calificable()
+		{
+			return $this->calificable;
+		}
+		function set_calificable($value)
+		{
+			$this->calificable = $value;
 		}
 		
 		//elements

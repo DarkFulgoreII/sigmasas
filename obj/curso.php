@@ -13,9 +13,9 @@
  		
 		//simple attributes
 		
-		var $nombre;
-		var $codigo;
-		var $descripcion;
+		var $nombre; // (varchar)
+		var $codigo; // (varchar)
+		var $descripcion; // (varchar)
 		
 		//collections
 		

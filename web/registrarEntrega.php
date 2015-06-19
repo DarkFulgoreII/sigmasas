@@ -2,10 +2,27 @@
 	session_start();
 	require_once("../config.php");
 	// cargar los posibles cursos
-	$cursos = $contenedor->get_curso_collection();
+	$cursos = array();
 	// cargar los posibles grupos
-	$grupos = $contenedor->get_grupo_collection();
+	$grupos = array();
 
+	if(isset($_SESSION["role"]) && $_SESSION['role']=="ADMIN")
+	{
+		// cargar los posibles cursos
+		$cursos = $contenedor->get_curso_collection();
+		// cargar los posibles grupos
+		$grupos = $contenedor->get_grupo_collection();	
+	}
+	else
+	{
+		$username = $_SESSION['userName'];
+		print_variable("usuario para filtrar cursos", $username);
+		//paso 1: mirar que cursos se les dejan disponibles
+		$cursos = $helper->darCursosAutorizados($username, $contenedor->get_curso_collection());
+
+		//paso 2: basado en los cursos, mirar que grupos se les dejan disponibles
+		$grupos = $helper->darGruposAutorizados($username, $contenedor->get_curso_collection());
+	}
 	//print_recursive("cursos", $cursos);
 	//print_recursive("grupos", $grupos);
 	print_recursive("REQUEST", $_REQUEST);
@@ -75,18 +92,23 @@
 	    [estudiantes] => Array[pos]=idestudiante
 	    [actividades] =>Array[pos]=idactividad
 	    [checkbox_entrega] => Array[idestudiante][idactividad]=true
-	 
+	 	[hidden_spin_calificacion] =>Array[idestudiante][idactividad] =5.0
 	    */
 	    $semana = $_REQUEST['hidden_semana'];
 	    $seccion = new seccion($_REQUEST['hidden_seccion']); $seccion->load();
 	    $estudiantes = $_REQUEST['estudiantes'];
 	    $actividades = $_REQUEST['actividades'];
+
 	    $entregas = array();
+	    $observaciones = array();
+	    $calificaciones = array();
+
 	    if(isset($_REQUEST['text_observaciones'])) $observaciones = $_REQUEST['text_observaciones'];
-	    print_recursive("observaciones", $observaciones);
 	    if(isset($_REQUEST['checkbox_entrega'])) $entregas = $_REQUEST['checkbox_entrega'];
+	    if(isset($_REQUEST['hidden_spin_calificacion'])) $calificaciones = $_REQUEST['hidden_spin_calificacion'];
 	    $registradapor = $_SESSION['userName'];
-	    $helper->guardarEntregas($estudiantes, $actividades, $entregas, $semana, $seccion, $registradapor, $observaciones);
+	    
+	    $helper->guardarEntregas($estudiantes, $actividades, $entregas, $semana, $seccion, $registradapor, $observaciones, $calificaciones);
 	}
 ?>
 <html lang="es">
@@ -95,7 +117,26 @@
 		<title>Registrar entrega</title>
 		<?
 			include_javascript();
+			if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "generar")
+			{
+				$js_inject = $helper->crearMatrizCalificaciones($estudiantes, $actividades);
+				echo $js_inject;	
+			}
 		?>
+		<script type="text/javascript">
+			function copiarMatrices()
+			{
+				array_indices.forEach(function(combinacion) 
+				{
+    				var es = combinacion.split("_")[0];
+    				var ac = combinacion.split("_")[1];
+    				var hiddenc = document.getElementById('hidden_spin_calificacion['+es+']['+ac+']');
+    				
+    				//console.log(matrix_spin_calificacion[es][ac].val());
+    				hiddenc.value = matrix_spin_calificacion[es][ac].val();
+				});
+			}
+		</script>
 	</head>
 	<body>
 		<div class="well" ><img src="../img/cabezote.png" class="img-responsive" alt="Sigma" width="1055" height="118"></div>
@@ -208,9 +249,45 @@
 								<?foreach ($actividades as $actividad ) :?>
 									<th colspan="2">
 										<small>
-											<font size="1">
-												<? eecho( $actividad->get_nombre() ); ?>
-											</font>
+											<table>
+												<tr>
+													<td colspan="2">
+														<font size="2" >
+															<?eecho( $actividad->get_nombre() );?>
+														</font>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2">
+														<font size="1" >
+															<? eecho( $actividad->get_descripcion() ); ?>
+														</font >
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<font size="1" >
+															<strong>
+																[
+																<?
+																	if($actividad->get_tipo()=="P")
+																		eecho ("Presencial");
+																	else
+																		eecho("Virtual");
+																?>
+																][
+																<?
+																	if($actividad->get_calificable()==0)
+																		eecho ("Entregable");
+																	else
+																		eecho("Calificable");
+																?>
+																]
+															</strong>
+														</font>
+													</td>
+												</tr>
+											</table>
 										</small>
 										<input type = "hidden" name= "actividades[] " id= "actividades[] " value = "<?= $actividad->get_idactividad()?>" />
 									</th>	
@@ -226,39 +303,65 @@
 										<?
 											$activaentrega = "";
 											$claseentrega = "class='danger'";
+											$calificacion = 0;
+											$contenidoobservaciones = "";
 											
-											if(isset($entregas[$estudiante->get_idestudiante()][$actividad->get_idactividad()]))
+											if($actividad->get_calificable()==1)
 											{
-												if($entregas[$estudiante->get_idestudiante()][$actividad->get_idactividad()]->get_realizada()==1)
+												if(isset($entregas[$estudiante->get_idestudiante()][$actividad->get_idactividad()]))
 												{
-													$activaentrega = "checked";
-													$claseentrega = "class='success'";
-												}	
+													if($entregas[$estudiante->get_idestudiante()][$actividad->get_idactividad()]->get_calificacion()>0)
+													{
+														$claseentrega = "class='success'";
+														$calificacion = $entregas[$estudiante->get_idestudiante()][$actividad->get_idactividad()]->get_calificacion();
+														$contenidoobservaciones = $entregas[$estudiante->get_idestudiante()][$actividad->get_idactividad()]->get_comentario();
+													}
+												}
+											}
+											else if ($actividad->get_calificable()==0)
+											{
+												if(isset($entregas[$estudiante->get_idestudiante()][$actividad->get_idactividad()]))
+												{
+													if($entregas[$estudiante->get_idestudiante()][$actividad->get_idactividad()]->get_realizada()==1)
+													{
+														$claseentrega = "class='success'";
+														$activaentrega = "checked";
+														$contenidoobservaciones = $entregas[$estudiante->get_idestudiante()][$actividad->get_idactividad()]->get_comentario();
+													}
+												}
 											}
 										?>	
 										<td <?= $claseentrega ?>>
-											<div class="checkbox">
-												<label>
-													<input 
-													type="checkbox" 
-													name="checkbox_entrega[<?= $estudiante->get_idestudiante() ?>][<?= $actividad->get_idactividad() ?>]" 
-													id="checkbox_entrega[<?= $estudiante->get_idestudiante() ?>][<?= $actividad->get_idactividad() ?>]"   
-													<?= $activaentrega ?>  
-												/>
-												<font size="1">Entrega:</font>
-												</label> 
-											</div>
+											<?if($actividad->get_calificable()==1){?>
+												<table>
+													<tr>
+														<td><font size="1">Calificación:</font></td>
+														<td>
+															<?
+																$eid= ($estudiante->get_idestudiante());
+																$aid= ($actividad->get_idactividad());
+																$nombrespinner = "spin_calificacion___".$eid."_".$aid;
+																putSpinnerInput($nombrespinner, $calificacion);	
+															?>
+														</td>
+													</tr>
+												</table>
+											<?}else if($actividad->get_calificable()==0){?>
+												<table>
+													<tr>
+														<td><font size="1">Entrega:</font></td>
+														<td>
+															<input 
+																type="checkbox" 
+																name="checkbox_entrega[<?= $estudiante->get_idestudiante() ?>][<?= $actividad->get_idactividad() ?>]" 
+																id="checkbox_entrega[<?= $estudiante->get_idestudiante() ?>][<?= $actividad->get_idactividad() ?>]"   
+																<?= $activaentrega ?>  
+															/>
+														</td>
+													</tr>
+												</table>												
+											<?}?>
 										</td>
-										<?
-											if(isset ($entregas[$estudiante->get_idestudiante()][$actividad->get_idactividad()]))
-											{
-												$contenidoobservaciones = $entregas[$estudiante->get_idestudiante()][$actividad->get_idactividad()]->get_comentario();
-											}
-											else
-											{
-												$contenidoobservaciones = "";
-											}
-										?>
 										<td <?= $claseentrega ?>>
 											<?
 												$claseboton = "btn btn-default btn-sm";
@@ -291,9 +394,21 @@
 								</tr>
 							<? endforeach; ?>
 						</table>
-						<center><input class="btn btn-default btn-sm" id = "submit_guardar" type = "submit" value="Guardar entregas" onClick=""/><a href="./registrarEntrega.php" class="btn btn-default btn-sm">Volver</a></center>
+						
+						<center>
+							<input 
+								class="btn btn-default btn-sm" 
+								id = "submit_guardar" 
+								type = "submit" 
+								value="Guardar entregas" 
+								onClick="copiarMatrices();"
+							/>
+							<a 
+								href="./registrarEntrega.php" 
+								class="btn btn-default btn-sm"
+							>Volver</a>
+						</center>
 					</form>
-					
 				</div>
 			<? }else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "guardar") { ?>
 				<div class="well">
@@ -302,9 +417,7 @@
 					    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 					    El registro de entregas ha sido guardado <strong>exitosamente</strong>
 					</div>
-					
 					<center><a href="./registrarEntrega.php" class="btn btn-default btn-sm">Volver</a></center>
-
 				</div>
 			<? }?> 
 		<?

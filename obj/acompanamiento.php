@@ -13,9 +13,9 @@
  		
 		//simple attributes
 		
-		var $comentario;
-		var $asunto;
-		var $curso;
+		var $comentario; // (varchar)
+		var $asunto; // (varchar)
+		var $curso; // (varchar)
 		
 		//collections
 		

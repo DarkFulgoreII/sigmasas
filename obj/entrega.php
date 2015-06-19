@@ -12,9 +12,10 @@
  		
 		//simple attributes
 		
-		var $realizada;
-		var $comentario;
-		var $registradapor;
+		var $realizada; // (tinyint)
+		var $comentario; // (varchar)
+		var $registradapor; // (varchar)
+		var $calificacion; // (float)
 		
 		//collections
 		
@@ -34,6 +35,7 @@
 		var $realizada_field="realizada";
 		var $comentario_field="comentario";
 		var $registradapor_field="registradapor";
+		var $calificacion_field="calificacion";
 		
 		//relation table names
 		
@@ -62,6 +64,7 @@
 				$this->realizada = $this->db->f($this->realizada_field);
 				$this->comentario = $this->db->f($this->comentario_field);
 				$this->registradapor = $this->db->f($this->registradapor_field);
+				$this->calificacion = $this->db->f($this->calificacion_field);
 				//elements
 				
 				$this->actividad_element = $this->db->f($this->actividad_rel1_field);
@@ -97,6 +100,7 @@
 			$dbQuery .= $this->realizada_field.",";
 			$dbQuery .= $this->comentario_field.",";
 			$dbQuery .= $this->registradapor_field.",";
+			$dbQuery .= $this->calificacion_field.",";
 			
 			$dbQuery .= "$this->actividad_rel1_field,";
 			$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
@@ -106,6 +110,7 @@
 			if($this->realizada == false) $dbQuery .= "0,"; else $dbQuery .= "1,";
 			$dbQuery .= " '$this->comentario',";
 			$dbQuery .= " '$this->registradapor',";
+			$dbQuery .= "  $this->calificacion ,";
 			
 			$dbQuery .= "$this->actividad_element,";
 		   	
@@ -143,6 +148,7 @@
 			if($this->realizada == false) $dbQuery .= "0,"; else $dbQuery .= "1,";
 			$dbQuery .= "$this->comentario_field = '$this->comentario',";
 			$dbQuery .= "$this->registradapor_field = '$this->registradapor',";
+			$dbQuery .= "$this->calificacion_field =  $this->calificacion ,";
 			
 			$dbQuery .= "$this->actividad_rel1_field = $this->actividad_element,";
 		   	
@@ -197,6 +203,15 @@
 		function set_registradapor($value)
 		{
 			$this->registradapor = $value;
+		}
+		
+		function get_calificacion()
+		{
+			return $this->calificacion;
+		}
+		function set_calificacion($value)
+		{
+			$this->calificacion = $value;
 		}
 		
 		//elements

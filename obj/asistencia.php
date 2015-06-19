@@ -13,11 +13,11 @@
  		
 		//simple attributes
 		
-		var $asiste;
-		var $registradapor;
-		var $fecha;
-		var $justificacion;
-		var $observaciones;
+		var $asiste; // (tinyint)
+		var $registradapor; // (varchar)
+		var $fecha; // (date)
+		var $justificacion; // (tinyint)
+		var $observaciones; // (varchar)
 		
 		//collections
 		

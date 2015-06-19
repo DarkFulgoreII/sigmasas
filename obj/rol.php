@@ -11,7 +11,7 @@
  		
 		//simple attributes
 		
-		var $nombre;
+		var $nombre; // (varchar)
 		
 		//collections
 		

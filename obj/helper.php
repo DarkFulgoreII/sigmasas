@@ -285,7 +285,26 @@
  			}
  			return false;
  		}
- 		function guardarEntregas($idestudiantes, $idactividades, $entregas,$semana, $seccion, $registradapor, $observaciones)
+ 		function crearMatrizCalificaciones($estudiantes, $actividades)
+ 		{
+			$js_inject ='<script type="text/javascript">';
+			$js_inject.="var matrix_spin_calificacion = new Array();var array_indices = new Array();\n";
+ 			$con=0;
+ 			foreach ($estudiantes as $est) 
+			{
+				$js_inject.= "matrix_spin_calificacion[".$est->get_idestudiante()."] = new Array();\n";
+				foreach ($actividades as $act) 
+				{
+					$js_inject.= "matrix_spin_calificacion[".$est->get_idestudiante()."][".$act->get_idactividad()."] = document.createElement('div');\n";
+					$js_inject.= "array_indices[".$con."]='".$est->get_idestudiante()."_".$act->get_idactividad()."';\n";
+					$con++;
+				}
+			}
+			$js_inject .="</script>\n";
+			return $js_inject;
+ 		}
+
+ 		function guardarEntregas($idestudiantes, $idactividades, $entregas,$semana, $seccion, $registradapor, $observaciones, $calificaciones)
  		{
  			foreach($idestudiantes as $idestudiante)
  			{
@@ -300,9 +319,9 @@
  						if(isset($entregas[$idestudiante][$idactividad])) $entrega -> set_realizada (true);
  						else  $entrega -> set_realizada (false);
 
-
-
  						if(isset($observaciones[$idestudiante][$idactividad])) $entrega->set_comentario($observaciones[$idestudiante][$idactividad]);
+ 						if(isset($calificaciones[$idestudiante][$idactividad])) $entrega->set_calificacion($calificaciones[$idestudiante][$idactividad]);
+
  						$entrega->set_registradapor($registradapor);
 
  						$entrega->set_actividad_element($actividad);
@@ -316,6 +335,8 @@
  						else  $entrega -> set_realizada (false);
  						
  						if(isset($observaciones[$idestudiante][$idactividad])) $entrega->set_comentario($observaciones[$idestudiante][$idactividad]);
+ 						if(isset($calificaciones[$idestudiante][$idactividad])) $entrega->set_calificacion($calificaciones[$idestudiante][$idactividad]);
+ 						
  						$entrega->update();
  					}
  				}

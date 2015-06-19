@@ -7,6 +7,7 @@
 		include_datetimeinput_widget();
 		include_style();
 		include_hiding();
+		include_spinner_widget();
 		//put all including functions here!
 	}
 	function include_hiding()
@@ -53,6 +54,14 @@
 		    <script type="text/javascript" src="../inc/jqwidgets/scripts/jquery-1.11.1.min.js"></script>
 	    <?
 	}
+	function include_spinner_widget()
+	{
+		?>
+			<script type="text/javascript" src="../inc/jqwidgets/jqwidgets/jqxcore.js"></script>
+   			<script type="text/javascript" src="../inc/jqwidgets/jqwidgets/jqxnumberinput.js"></script>
+    		<script type="text/javascript" src="../inc/jqwidgets/jqwidgets/jqxbuttons.js"></script>
+		<?
+	}
 
 	function include_datetimeinput_widget()
 	{
@@ -66,7 +75,39 @@
 	    <?		
 	}
 	
-	
+	function putSpinnerInput($id, $defaultvalue="5")
+	{
+		$pos = explode("___", $id)[1];
+		$name = explode("___", $id)[0];
+		$i = explode("_",$pos)[0];
+		$j = explode("_",$pos)[1];
+		?>
+			<script type="text/javascript">
+		        $(document).ready(function () {
+		            // Create jqxNumberInput
+		            //$("#<?=$id?>").jqxNumberInput
+		            var spinner =$("#<?=$id?>");
+		            spinner.jqxNumberInput
+		            (
+		            	{ 
+		            		width: '80px', 
+		            		height: '25px', 
+		            		digits: 1 , 
+		            		spinButtons: true ,
+		            		min : 0,
+		            		max : 5,
+		            		spinButtonsStep :10,
+		            		decimalSeparator : "."
+		            	}
+		            );
+		            spinner.jqxNumberInput('val', <?=$defaultvalue?>);
+		            matrix_<?=$name?>[<?=$i?>][<?=$j?>] =spinner ;
+		        });
+    		</script>
+    		<div style='margin-top: 3px;' id='<?=$id?>'></div>
+    		<input type='hidden' id='hidden_<?=$name?>[<?=$i?>][<?=$j?>]' name = 'hidden_<?=$name?>[<?=$i?>][<?=$j?>]'></hidden>
+		<?
+	}
 	function putCalendarInput($id,  $width='250px', $height='25px')
 	{	
 		?>

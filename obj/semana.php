@@ -11,11 +11,11 @@
  		
 		//simple attributes
 		
-		var $fechainicial;
-		var $fechafinal;
-		var $cohorte;
-		var $numerosemana;
-		var $descripcion;
+		var $fechainicial; // (date)
+		var $fechafinal; // (date)
+		var $cohorte; // (int)
+		var $numerosemana; // (int)
+		var $descripcion; // (varchar)
 		
 		//collections
 		

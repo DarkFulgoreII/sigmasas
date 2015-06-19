@@ -11,9 +11,9 @@
  		
 		//simple attributes
 		
-		var $descripcion;
-		var $orden;
-		var $mostrar;
+		var $descripcion; // (varchar)
+		var $orden; // (int)
+		var $mostrar; // (tinyint)
 		
 		//collections
 		

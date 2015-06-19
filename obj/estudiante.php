@@ -13,57 +13,57 @@
  		
 		//simple attributes
 		
-		var $nombres;
-		var $apellido1;
-		var $apellido2;
-		var $genero;
-		var $estadocivil;
-		var $fechanacimiento;
-		var $nacionalidad;
-		var $tipodocumento;
-		var $numdocumento;
-		var $etnia;
-		var $email;
-		var $telefonofijo;
-		var $telefonomovil;
-		var $ciudadresidencia;
-		var $direccionresidencia;
-		var $acudienteapellido1;
-		var $acudienteapellido2;
-		var $acudientenombres;
-		var $acudienterelacion;
-		var $acudientetelefonofijo;
-		var $acudientetelefonomovil;
-		var $acudienteciudadresidencia;
-		var $acudientedireccionresidencia;
-		var $institucion;
-		var $egreso;
-		var $saber11;
-		var $anhosaber;
-		var $saber11matematica;
-		var $saber11espanol;
-		var $estudiaactualmente;
-		var $actualmenteestudiaotros;
-		var $admisioncentroeducativo;
-		var $estatrabajando;
-		var $planescortoplazo;
-		var $planescortoplazootros;
-		var $interesformacion;
-		var $interesformacionotros;
-		var $experienciavirtuales;
-		var $estrato;
-		var $sisben;
-		var $especiales;
-		var $discapacidades;
-		var $victima;
-		var $desmovilizado;
-		var $hijodesmovilizado;
-		var $desplazado;
-		var $internet;
-		var $internetcalidad;
-		var $codigouniandes;
-		var $correouniandes;
-		var $desactivado;
+		var $nombres; // (varchar)
+		var $apellido1; // (varchar)
+		var $apellido2; // (varchar)
+		var $genero; // (varchar)
+		var $estadocivil; // (varchar)
+		var $fechanacimiento; // (varchar)
+		var $nacionalidad; // (varchar)
+		var $tipodocumento; // (varchar)
+		var $numdocumento; // (varchar)
+		var $etnia; // (varchar)
+		var $email; // (varchar)
+		var $telefonofijo; // (varchar)
+		var $telefonomovil; // (varchar)
+		var $ciudadresidencia; // (varchar)
+		var $direccionresidencia; // (varchar)
+		var $acudienteapellido1; // (varchar)
+		var $acudienteapellido2; // (varchar)
+		var $acudientenombres; // (varchar)
+		var $acudienterelacion; // (varchar)
+		var $acudientetelefonofijo; // (varchar)
+		var $acudientetelefonomovil; // (varchar)
+		var $acudienteciudadresidencia; // (varchar)
+		var $acudientedireccionresidencia; // (varchar)
+		var $institucion; // (varchar)
+		var $egreso; // (varchar)
+		var $saber11; // (varchar)
+		var $anhosaber; // (varchar)
+		var $saber11matematica; // (varchar)
+		var $saber11espanol; // (varchar)
+		var $estudiaactualmente; // (varchar)
+		var $actualmenteestudiaotros; // (varchar)
+		var $admisioncentroeducativo; // (varchar)
+		var $estatrabajando; // (varchar)
+		var $planescortoplazo; // (varchar)
+		var $planescortoplazootros; // (varchar)
+		var $interesformacion; // (varchar)
+		var $interesformacionotros; // (varchar)
+		var $experienciavirtuales; // (varchar)
+		var $estrato; // (varchar)
+		var $sisben; // (varchar)
+		var $especiales; // (varchar)
+		var $discapacidades; // (varchar)
+		var $victima; // (varchar)
+		var $desmovilizado; // (varchar)
+		var $hijodesmovilizado; // (varchar)
+		var $desplazado; // (varchar)
+		var $internet; // (varchar)
+		var $internetcalidad; // (varchar)
+		var $codigouniandes; // (varchar)
+		var $correouniandes; // (varchar)
+		var $desactivado; // (tinyint)
 		
 		//collections
 		

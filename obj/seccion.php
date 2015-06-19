@@ -15,8 +15,8 @@
  		
 		//simple attributes
 		
-		var $crn;
-		var $descripcion;
+		var $crn; // (varchar)
+		var $descripcion; // (varchar)
 		
 		//collections
 		
