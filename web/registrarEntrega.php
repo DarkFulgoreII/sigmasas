@@ -124,18 +124,21 @@
 			}
 		?>
 		<script type="text/javascript">
+			
 			function copiarMatrices()
 			{
+				
 				array_indices.forEach(function(combinacion) 
 				{
     				var es = combinacion.split("_")[0];
     				var ac = combinacion.split("_")[1];
     				var hiddenc = document.getElementById('hidden_spin_calificacion['+es+']['+ac+']');
     				
-    				//console.log(matrix_spin_calificacion[es][ac].val());
+    				console.log(matrix_spin_calificacion[es][ac].val());
     				hiddenc.value = matrix_spin_calificacion[es][ac].val();
 				});
 			}
+
 		</script>
 	</head>
 	<body>
@@ -282,6 +285,10 @@
 																	else
 																		eecho("Calificable");
 																?>
+																][
+																Peso: <?
+																	echo $actividad->get_peso();
+																?>%
 																]
 															</strong>
 														</font>
@@ -401,7 +408,7 @@
 								id = "submit_guardar" 
 								type = "submit" 
 								value="Guardar entregas" 
-								onClick="copiarMatrices();"
+								onClick="copiarMatrices()"
 							/>
 							<a 
 								href="./registrarEntrega.php" 
@@ -409,6 +416,7 @@
 							>Volver</a>
 						</center>
 					</form>
+					<!--button onClick="copiarMatrices();">Prueba</button-->
 				</div>
 			<? }else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "guardar") { ?>
 				<div class="well">

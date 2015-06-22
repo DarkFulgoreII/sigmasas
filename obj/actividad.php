@@ -16,6 +16,7 @@
 		var $numerosemana; // (int)
 		var $tipo; // (varchar)
 		var $calificable; // (tinyint)
+		var $peso; // (float)
 		
 		//collections
 		
@@ -36,6 +37,7 @@
 		var $numerosemana_field="numerosemana";
 		var $tipo_field="tipo";
 		var $calificable_field="calificable";
+		var $peso_field="peso";
 		
 		//relation table names
 		
@@ -62,6 +64,7 @@
 				$this->numerosemana = $this->db->f($this->numerosemana_field);
 				$this->tipo = $this->db->f($this->tipo_field);
 				$this->calificable = $this->db->f($this->calificable_field);
+				$this->peso = $this->db->f($this->peso_field);
 				//elements
 				
 				return true;
@@ -90,6 +93,7 @@
 			$dbQuery .= $this->numerosemana_field.",";
 			$dbQuery .= $this->tipo_field.",";
 			$dbQuery .= $this->calificable_field.",";
+			$dbQuery .= $this->peso_field.",";
 			
 			$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
 			$dbQuery .= ") ";
@@ -100,6 +104,7 @@
 			$dbQuery .= "  $this->numerosemana ,";
 			$dbQuery .= " '$this->tipo',";
 			if($this->calificable == false) $dbQuery .= "0,"; else $dbQuery .= "1,";
+			$dbQuery .= "  $this->peso ,";
 			
 		   	
 		   	$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
@@ -138,6 +143,7 @@
 			$dbQuery .= "$this->tipo_field = '$this->tipo',";
 			$dbQuery .= "$this->calificable_field = ";
 			if($this->calificable == false) $dbQuery .= "0,"; else $dbQuery .= "1,";
+			$dbQuery .= "$this->peso_field =  $this->peso ,";
 			
 		   	
 		   	$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
@@ -209,6 +215,15 @@
 		function set_calificable($value)
 		{
 			$this->calificable = $value;
+		}
+		
+		function get_peso()
+		{
+			return $this->peso;
+		}
+		function set_peso($value)
+		{
+			$this->peso = $value;
 		}
 		
 		//elements

@@ -83,8 +83,9 @@
 		$j = explode("_",$pos)[1];
 		?>
 			<script type="text/javascript">
-		        $(document).ready(function () {
-		            // Create jqxNumberInput
+		        $(document).ready(function () 
+		        {
+					// Create jqxNumberInput
 		            //$("#<?=$id?>").jqxNumberInput
 		            var spinner =$("#<?=$id?>");
 		            spinner.jqxNumberInput
@@ -102,6 +103,7 @@
 		            );
 		            spinner.jqxNumberInput('val', <?=$defaultvalue?>);
 		            matrix_<?=$name?>[<?=$i?>][<?=$j?>] =spinner ;
+		            //console.log("<?=$id?>");
 		        });
     		</script>
     		<div style='margin-top: 3px;' id='<?=$id?>'></div>

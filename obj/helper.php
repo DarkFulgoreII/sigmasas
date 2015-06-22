@@ -295,15 +295,18 @@
 				$js_inject.= "matrix_spin_calificacion[".$est->get_idestudiante()."] = new Array();\n";
 				foreach ($actividades as $act) 
 				{
-					$js_inject.= "matrix_spin_calificacion[".$est->get_idestudiante()."][".$act->get_idactividad()."] = document.createElement('div');\n";
-					$js_inject.= "array_indices[".$con."]='".$est->get_idestudiante()."_".$act->get_idactividad()."';\n";
-					$con++;
+					if($act->get_calificable()=="1")
+					{
+						$js_inject.= "matrix_spin_calificacion[".$est->get_idestudiante()."][".$act->get_idactividad()."] = document.createElement('div');\n";
+						$js_inject.= "array_indices[".$con."]='".$est->get_idestudiante()."_".$act->get_idactividad()."';\n";
+						//$js_inject.= "console.log(".$est->get_idestudiante().");\n";
+						$con++;	
+					}
 				}
 			}
 			$js_inject .="</script>\n";
 			return $js_inject;
  		}
-
  		function guardarEntregas($idestudiantes, $idactividades, $entregas,$semana, $seccion, $registradapor, $observaciones, $calificaciones)
  		{
  			foreach($idestudiantes as $idestudiante)
@@ -320,7 +323,10 @@
  						else  $entrega -> set_realizada (false);
 
  						if(isset($observaciones[$idestudiante][$idactividad])) $entrega->set_comentario($observaciones[$idestudiante][$idactividad]);
+ 						else $entrega->set_comentario("");
+
  						if(isset($calificaciones[$idestudiante][$idactividad])) $entrega->set_calificacion($calificaciones[$idestudiante][$idactividad]);
+ 						else $entrega->set_calificacion(0);
 
  						$entrega->set_registradapor($registradapor);
 
@@ -335,8 +341,11 @@
  						else  $entrega -> set_realizada (false);
  						
  						if(isset($observaciones[$idestudiante][$idactividad])) $entrega->set_comentario($observaciones[$idestudiante][$idactividad]);
+ 						else $entrega->set_comentario("");
+
  						if(isset($calificaciones[$idestudiante][$idactividad])) $entrega->set_calificacion($calificaciones[$idestudiante][$idactividad]);
- 						
+ 						else $entrega->set_calificacion(0);
+
  						$entrega->update();
  					}
  				}

@@ -5,8 +5,7 @@
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Asistencia <span class="caret"></span></a>
       <ul class="dropdown-menu">
         <li><a href="<?=SITE?>web/registrarAsistencia.php" >Registro de asistencia</a></li>
-        <li><a href="<?=SITE?>web/reporteAsistenciaGrupo.php" >Reporte de asistencia por grupo</a></li>
-        <li><a href="<?=SITE?>web/reporteAsistenciaCursos.php" >Reporte de asistencia por cursos</a></li>                      
+        <li><a href="<?=SITE?>web/reporteAsistenciaGrupo.php" >Reporte de asistencia por grupo</a></li>                   
       </ul>
     </li>
     <li class="dropdown">
@@ -17,12 +16,9 @@
     </li>
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reportes <span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/asistencia/bloquesAsistencia.rptdesign" >Bloques de asistencia</a></li>
-        <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/asistencia/asistenciaConsolidada.rptdesign" >Reporte consolidado de asistencias</a></li>
-        <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/entregas/entregasConsolidadas.rptdesign" >Reporte consolidado de entregas</a></li> 
+      <ul class="dropdown-menu"> 
         <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/asistencia/tablaAsistenciaConsolidada.rptdesign" >Tabla consolidada de asistencia</a></li> 
-        <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/asistencia/reporteTotalAsistencia.rptdesign" >Reporte total de asistencia por grupo (versión preliminar)</a></li>                      
+        <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/asistencia/reporteTotalAsistenciayEntregas.rptdesign" >Reporte total de asistencia y entregas por grupo</a></li>                      
       </ul>
     </li>
     <?if(isset($_SESSION["role"] ) && $_SESSION["role"] == "ADMIN"):?>
