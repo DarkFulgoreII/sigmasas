@@ -70,25 +70,35 @@
 			include ("./inc/menu.php");
 		?>
 		<div class="well" >
-			
-			<p><h4><strong>Sigma SAS</strong> - Sistema de registro de y asistencia y seguimiento del programa Sigma</h4></p>
-			<table class="table table-bordered" align="center">
-				<tr>
-					<th align="center"><center>Menú Principal</center></th>
-				</tr>
-				<tr>
-					<td align="center"><a href="web/registrarAsistencia.php" class="btn btn-default btn-sm">Registrar asistencia a sesiones</a></td>
-				</tr>
-				<tr>
-					<td align="center"><a href="web/registrarEntrega.php" class="btn btn-default btn-sm">Registrar entregas y actividades</a></td>
-				</tr>
-				<tr>
-					<td align="center"><a href="web/reporteAsistenciaGrupo.php" class="btn btn-default btn-sm">Reporte de asistencia por grupos</a></td>
-				</tr>
-				<tr>
-					<td align="center"><a href="web/reporteAsistenciaCursos.php" class="btn btn-default btn-sm">Reporte de asistencia por cursos</a></td>
-				</tr>
-			</table>
+			<div class="articles">
+				<div class="row">
+					<div class="col-xs-12 col-sm-5 col-md-5">
+						<img class="img-responsive img-border" title="SigmaSAS" src="img/home.jpg" alt="SigmaSAS" />
+					</div>
+					<div class="col-xs-12 col-sm-7 col-md-7">			
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<h2>SigmaSAS</h2>
+								<p>El sistema de registro de asistencia y seguimiento <strong>SigmaSAS</strong> fué desarrollado con el proposito de llevar un registro de seguimiento centralizado de los estudiantes del <strong>Programa Sigma</strong>. Entre otros, el sistema permite:</p>
+								<ul class="list-group">
+  									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Realizar registro en línea de la <strong>asistencia</strong> de los estudiantes.</li>
+									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Registrar <strong>justificaciones</strong> y observaciones de <strong>seguimiento</strong> sobre la asistencia.</li>
+									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Generar <strong>listados de clase para imprimir</strong> copias físicas.</li>
+									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Registrar la realización de <strong>actividades</strong> por parte de los estudiantes.</li>
+									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Registrar las <strong>calificaciones</strong> de actividades realizadas por los estudiantes./li>
+									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Registrar eventos de <strong>acompañamiento</strong> y citaciones a estudiantes.</li>
+									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Consultar reportes consolidados de <strong>asistencia</strong>.</li>
+									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Consultar reportes consolidados de <strong>entregas</strong>.</li>
+									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Calcular <strong>notas</strong> definitivas de estudiantes.</li>
+									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Consultar reportes consolidados de registros de <strong>acompañamiento</strong>.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					
+					
+				</div>
+			</div>
 		</div>
 		<?
 		}

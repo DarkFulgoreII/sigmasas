@@ -9,6 +9,8 @@
 	require_once("usuario.php");
 	require_once("bloque.php");
 	require_once("semana.php");
+	require_once("categoria.php");
+	require_once("tipoacompanamiento.php");
  	
  	class sigmasas 
  	{
@@ -33,6 +35,8 @@
 		var $usuario_collection = array();
 		var $bloque_collection = array();
 		var $semana_collection = array();
+		var $categoria_collection = array();
+		var $tipoacompanamiento_collection = array();
 		
 		//elements
 		
@@ -83,6 +87,14 @@
 		//var $semana_table = "semana";
 		var $semana_relN_field = "idsemana";
 		var $semana_rel_table = "sigmasas_has_semana";
+		// categoria : 1-N relation
+		//var $categoria_table = "categoria";
+		var $categoria_relN_field = "idcategoria";
+		var $categoria_rel_table = "sigmasas_has_categoria";
+		// tipoacompanamiento : 1-N relation
+		//var $tipoacompanamiento_table = "tipoacompanamiento";
+		var $tipoacompanamiento_relN_field = "idtipoacompanamiento";
+		var $tipoacompanamiento_rel_table = "sigmasas_has_tipoacompanamiento";
 		
 		//constructor
 		function sigmasas( $id=0 ) 
@@ -272,6 +284,46 @@
 			return $this->semana_collection;
 		}
 		
+		function load_categoria_collection()
+		{
+			(string) $dbQuery     = "";
+			$dbQuery = "SELECT * FROM $this->categoria_rel_table WHERE $this->idsigmasas = $this->idsigmasas_field";
+			$this->db->query( $dbQuery );
+			while ($this->db->next_record()) 
+			{
+				$elemento = new categoria();
+				$elemento->set_idcategoria($this->db->f($this->categoria_relN_field));
+				$elemento->load();
+				$this->categoria_collection[] = $elemento;
+			}
+			return true;
+		}
+		function get_categoria_collection()
+		{
+			$this->load_categoria_collection();
+			return $this->categoria_collection;
+		}
+		
+		function load_tipoacompanamiento_collection()
+		{
+			(string) $dbQuery     = "";
+			$dbQuery = "SELECT * FROM $this->tipoacompanamiento_rel_table WHERE $this->idsigmasas = $this->idsigmasas_field";
+			$this->db->query( $dbQuery );
+			while ($this->db->next_record()) 
+			{
+				$elemento = new tipoacompanamiento();
+				$elemento->set_idtipoacompanamiento($this->db->f($this->tipoacompanamiento_relN_field));
+				$elemento->load();
+				$this->tipoacompanamiento_collection[] = $elemento;
+			}
+			return true;
+		}
+		function get_tipoacompanamiento_collection()
+		{
+			$this->load_tipoacompanamiento_collection();
+			return $this->tipoacompanamiento_collection;
+		}
+		
 		//LOAD RELATIONS -N (INVERSE) load one sigmasas using a collection element (parent)
 		
 		
@@ -391,6 +443,38 @@
 		{
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->semana_rel_table WHERE $idsemana = $this->semana_relN_field";
+			$this->db->query( $dbQuery );
+			while ($this->db->next_record()) 
+			{
+				$elemento = new sigmasas();
+				$elemento->set_idsigmasas ($this->db->f($this->idsigmasas_field));
+				$elemento->load();
+				return $elemento;
+			}
+			return false;
+		}
+		
+		
+		function load_sigmasas_by_categoria_inverse($idcategoria)
+		{
+			(string) $dbQuery     = "";
+			$dbQuery = "SELECT * FROM $this->categoria_rel_table WHERE $idcategoria = $this->categoria_relN_field";
+			$this->db->query( $dbQuery );
+			while ($this->db->next_record()) 
+			{
+				$elemento = new sigmasas();
+				$elemento->set_idsigmasas ($this->db->f($this->idsigmasas_field));
+				$elemento->load();
+				return $elemento;
+			}
+			return false;
+		}
+		
+		
+		function load_sigmasas_by_tipoacompanamiento_inverse($idtipoacompanamiento)
+		{
+			(string) $dbQuery     = "";
+			$dbQuery = "SELECT * FROM $this->tipoacompanamiento_rel_table WHERE $idtipoacompanamiento = $this->tipoacompanamiento_relN_field";
 			$this->db->query( $dbQuery );
 			while ($this->db->next_record()) 
 			{
@@ -642,6 +726,48 @@
 			return true;
 		}
 		
+		function add_categoria ($idcategoria)
+		{
+			(string) $dbQuery     = "";
+			
+			$dbQuery = "INSERT INTO $this->categoria_rel_table ";
+		   	$dbQuery .= "(";
+		   	$dbQuery .= " $this->idsigmasas_field,";
+		   	$dbQuery .= " $this->categoria_relN_field";
+		   	$dbQuery .= ")";
+		   	$dbQuery .= " VALUES ";
+		   	$dbQuery .= "(";
+		   	$dbQuery .= " $this->idsigmasas,";
+		   	$dbQuery .= " $idcategoria";
+		   	$dbQuery .= ")";
+		   	
+		   	$this->db->query( $dbQuery );
+			
+			if ($this->db->affected_rows() == 0) return false;
+			return true;
+		}
+		
+		function add_tipoacompanamiento ($idtipoacompanamiento)
+		{
+			(string) $dbQuery     = "";
+			
+			$dbQuery = "INSERT INTO $this->tipoacompanamiento_rel_table ";
+		   	$dbQuery .= "(";
+		   	$dbQuery .= " $this->idsigmasas_field,";
+		   	$dbQuery .= " $this->tipoacompanamiento_relN_field";
+		   	$dbQuery .= ")";
+		   	$dbQuery .= " VALUES ";
+		   	$dbQuery .= "(";
+		   	$dbQuery .= " $this->idsigmasas,";
+		   	$dbQuery .= " $idtipoacompanamiento";
+		   	$dbQuery .= ")";
+		   	
+		   	$this->db->query( $dbQuery );
+			
+			if ($this->db->affected_rows() == 0) return false;
+			return true;
+		}
+		
 		//REMOVE FROM COLLECTION
 		
 		function remove_acompanamiento ($idacompanamiento)
@@ -757,6 +883,36 @@
 			$dbQuery.= " WHERE $this->idsigmasas_field = $this->idsigmasas ";
 			$dbQuery.= " AND ";
 			$dbQuery.= " $this->semana_relN_field = $idsemana ";
+			
+			$this->db->query( $dbQuery );
+			
+			if ($this->db->affected_rows() == 0) return false;               
+			return true;
+		}  		
+		
+		function remove_categoria ($idcategoria)
+		{
+			(string) $dbQuery     = "";
+			
+			$dbQuery = "DELETE FROM $this->categoria_rel_table ";
+			$dbQuery.= " WHERE $this->idsigmasas_field = $this->idsigmasas ";
+			$dbQuery.= " AND ";
+			$dbQuery.= " $this->categoria_relN_field = $idcategoria ";
+			
+			$this->db->query( $dbQuery );
+			
+			if ($this->db->affected_rows() == 0) return false;               
+			return true;
+		}  		
+		
+		function remove_tipoacompanamiento ($idtipoacompanamiento)
+		{
+			(string) $dbQuery     = "";
+			
+			$dbQuery = "DELETE FROM $this->tipoacompanamiento_rel_table ";
+			$dbQuery.= " WHERE $this->idsigmasas_field = $this->idsigmasas ";
+			$dbQuery.= " AND ";
+			$dbQuery.= " $this->tipoacompanamiento_relN_field = $idtipoacompanamiento ";
 			
 			$this->db->query( $dbQuery );
 			

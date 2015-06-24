@@ -8,7 +8,43 @@
 		include_style();
 		include_hiding();
 		include_spinner_widget();
+		include_mini_icon();
+		include_ajax_function();
 		//put all including functions here!
+	}
+	function include_ajax_function()
+	{
+		?>
+			<script type="text/javascript">
+				function ajaxRequest(targetid,  service, parameters)
+				{
+					var xmlhttp;
+					if (window.XMLHttpRequest)
+				  	{// code for IE7+, Firefox, Chrome, Opera, Safari
+				  		xmlhttp=new XMLHttpRequest();
+				  	}
+					else
+				  	{// code for IE6, IE5
+				  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				  	}
+					xmlhttp.onreadystatechange=function()
+				  	{
+				  		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+					    {
+					   	 	document.getElementById(targetid).innerHTML=xmlhttp.responseText;
+					    }
+					}
+					xmlhttp.open("POST","ajax.php?service="+service+parameters,true);
+					xmlhttp.send();
+				}
+			</script>
+		<?
+	}
+	function include_mini_icon()
+	{
+		?>
+			<link rel="shortcut icon" href="../img/ficon.ico">
+		<?
 	}
 	function include_hiding()
 	{

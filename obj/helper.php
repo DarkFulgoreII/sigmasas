@@ -7,6 +7,39 @@
  		{
  			$this->contenedor = $cont;
  		}
+ 		function guardarNuevoAcompanamiento($registradapor, $fecha, $estudiante, $tipoacompanamiento, $aspectos, $asunto, $comentario)
+ 		{
+ 			$acompanamiento = new acompanamiento();
+ 			$acompanamiento -> set_fecha ($fecha);
+ 			$usuario = new usuario(1);$usuario->load();
+ 			$acompanamiento -> set_usuario_element($usuario);
+ 			$acompanamiento -> set_registradapor ($registradapor);
+ 			
+ 			$acompanamiento -> set_tipoacompanamiento_element($tipoacompanamiento);
+ 			$acompanamiento -> set_asunto($asunto);
+ 			$acompanamiento -> set_comentario($comentario);
+
+ 			$acompanamiento->insert();
+
+ 			$acompanamiento -> add_estudiante($estudiante->get_idestudiante());
+
+ 			foreach ($aspectos as $idaspecto => $value) 
+ 			{
+ 				$acompanamiento -> add_aspecto($idaspecto);
+ 			}
+ 		}
+ 		function darEstudiantesPorGrupo ($idgrupo)
+ 		{
+ 			$seleccionados = array();
+			$grupo = new grupo ($idgrupo);$grupo->load();
+				
+			$estudiantes = $grupo->get_estudiante_collection();
+			foreach ($estudiantes as $estudiante ) 
+			{
+				$seleccionados [] = $estudiante;
+			}
+			return $this->ordenarEstudiantes($seleccionados);
+ 		}
 		function filtrarBloquesAutorizados($cursos, $bloques)
 		{
 			$bloquesautorizados = array();
@@ -169,6 +202,29 @@
  			}
  			return $resultado;
  		}
+ 		function ordenarCategorias($categorias, $ocultar = true)
+ 		{
+ 			$filtrados=array();
+ 			$ordenes = array();
+ 			$llaves = array();
+ 			$resultado = array();
+
+ 			foreach ($categorias as $categoria)
+ 			{	
+				$filtrados [$categoria->get_idcategoria()] = $categoria;
+				$ordenes[] = $categoria->get_orden();
+				$llaves[] = $categoria->get_idcategoria();	
+ 			}
+
+ 			array_multisort($ordenes, $llaves); 
+ 			
+ 			
+ 			foreach ($llaves as $llave ) 
+ 			{
+ 				$resultado[] = $filtrados[$llave];
+ 			}
+ 			return $resultado;
+ 		}
  		function darAsistencias_por_estudianteSeccion ($estudiante, $seccion)
  		{
  			$asistenciastotales = $estudiante->get_asistencia_collection();
@@ -253,8 +309,27 @@
  				if($asistencia == false) //no se ha registrado
  				{
  					$asistencia  = new asistencia();
- 					if(isset($asistencias[$idestudiante])) $asistencia-> set_asiste(true); else $asistencia-> set_asiste(false);
- 					if(isset($justificaciones[$idestudiante])) $asistencia-> set_justificacion(true); else $asistencia-> set_justificacion(false);
+ 					
+ 					//this code keeps just one true value.
+ 					if(isset($justificaciones[$idestudiante])) 
+ 					{
+ 						$asistencia-> set_justificacion(true);
+ 						$asistencia-> set_asiste(false);
+ 					} 
+ 					else 
+ 					{
+ 						$asistencia-> set_justificacion(false);
+ 					}
+ 					if(isset($asistencias[$idestudiante])) 
+ 					{
+ 						$asistencia-> set_asiste(true);
+ 						$asistencia-> set_justificacion(false);
+ 					} 
+ 					else 
+					{
+						$asistencia-> set_asiste(false);
+					}
+
  					if(isset($observaciones[$idestudiante])) $asistencia-> set_observaciones($observaciones[$idestudiante]);
  					$asistencia->set_fecha ($fecha);
  					$asistencia->set_registradapor($registradapor);
