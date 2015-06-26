@@ -44,7 +44,11 @@
 	</head>
 	<body>
 		
-	<div class="well" ><img src="./img/cabezote.png" class="img-responsive" alt="Sigma" width="1055" height="118"></div>	
+	<div class="well" >
+	<img src="./img/cabezote.png" class="img-responsive" alt="Sigma" width="1055" height="118">
+	<br>
+	<p><h4><strong>Sigma SAS</strong> - Sistema de registro de asistencia y seguimiento</h4></p>
+</div>	
 <?	
 	if(isset($_SESSION["userName"]) )
 	{
@@ -85,7 +89,7 @@
 									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Registrar <strong>justificaciones</strong> y observaciones de <strong>seguimiento</strong> sobre la asistencia.</li>
 									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Generar <strong>listados de clase para imprimir</strong> copias físicas.</li>
 									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Registrar la realización de <strong>actividades</strong> por parte de los estudiantes.</li>
-									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Registrar las <strong>calificaciones</strong> de actividades realizadas por los estudiantes./li>
+									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Registrar las <strong>calificaciones</strong> de actividades realizadas por los estudiantes.</li>
 									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Registrar eventos de <strong>acompañamiento</strong> y citaciones a estudiantes.</li>
 									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Consultar reportes consolidados de <strong>asistencia</strong>.</li>
 									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Consultar reportes consolidados de <strong>entregas</strong>.</li>
@@ -108,11 +112,7 @@
 			//header('Location: '.SITE.'web/denegado.php');
 		}
 		?>
-		<div class="panel-footer">
-			<?if (isset($_SESSION["userName"])): ?>
-				Usuario : <?=$_SESSION["userName"]?>  
-			<? endif; ?>
-		</div>
+		<?include ("./inc/footer.php");?>
 	</body>
 
 </html>

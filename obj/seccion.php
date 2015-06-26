@@ -89,6 +89,7 @@
 		
 		function load_estudiante_collection()
 		{
+			$this->estudiante_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->estudiante_rel_table WHERE $this->idseccion = $this->idseccion_field";
 			$this->db->query( $dbQuery );
@@ -109,6 +110,7 @@
 		
 		function load_usuario_collection()
 		{
+			$this->usuario_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->usuario_rel_table WHERE $this->idseccion = $this->idseccion_field";
 			$this->db->query( $dbQuery );

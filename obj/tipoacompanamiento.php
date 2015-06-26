@@ -1,6 +1,7 @@
  
  <?php
  	
+	require_once("categoria.php");
  	
  	class tipoacompanamiento 
  	{
@@ -15,6 +16,7 @@
 		
 		//collections
 		
+		var $categoria_collection = array();
 		
 		//elements
 		
@@ -31,6 +33,10 @@
 		
 		//relation table names
 		
+		// categoria : 1-N relation
+		//var $categoria_table = "categoria";
+		var $categoria_relN_field = "idcategoria";
+		var $categoria_rel_table = "tipoacompanamiento_has_categoria";
 		
 		//constructor
 		function tipoacompanamiento( $id=0 ) 
@@ -58,7 +64,44 @@
 		}
 		//LOAD RELATIONS -N
 		
+		function load_categoria_collection()
+		{
+			$this->categoria_collection = array();
+			(string) $dbQuery     = "";
+			$dbQuery = "SELECT * FROM $this->categoria_rel_table WHERE $this->idtipoacompanamiento = $this->idtipoacompanamiento_field";
+			$this->db->query( $dbQuery );
+			while ($this->db->next_record()) 
+			{
+				$elemento = new categoria();
+				$elemento->set_idcategoria($this->db->f($this->categoria_relN_field));
+				$elemento->load();
+				$this->categoria_collection[] = $elemento;
+			}
+			return true;
+		}
+		function get_categoria_collection()
+		{
+			$this->load_categoria_collection();
+			return $this->categoria_collection;
+		}
+		
 		//LOAD RELATIONS -N (INVERSE) load one tipoacompanamiento using a collection element (parent)
+		
+		
+		function load_tipoacompanamiento_by_categoria_inverse($idcategoria)
+		{
+			(string) $dbQuery     = "";
+			$dbQuery = "SELECT * FROM $this->categoria_rel_table WHERE $idcategoria = $this->categoria_relN_field";
+			$this->db->query( $dbQuery );
+			while ($this->db->next_record()) 
+			{
+				$elemento = new tipoacompanamiento();
+				$elemento->set_idtipoacompanamiento ($this->db->f($this->idtipoacompanamiento_field));
+				$elemento->load();
+				return $elemento;
+			}
+			return false;
+		}
 		
 		
 		
@@ -126,7 +169,43 @@
 		}
 		//ADD TO COLLECTION
 		
+		function add_categoria ($idcategoria)
+		{
+			(string) $dbQuery     = "";
+			
+			$dbQuery = "INSERT INTO $this->categoria_rel_table ";
+		   	$dbQuery .= "(";
+		   	$dbQuery .= " $this->idtipoacompanamiento_field,";
+		   	$dbQuery .= " $this->categoria_relN_field";
+		   	$dbQuery .= ")";
+		   	$dbQuery .= " VALUES ";
+		   	$dbQuery .= "(";
+		   	$dbQuery .= " $this->idtipoacompanamiento,";
+		   	$dbQuery .= " $idcategoria";
+		   	$dbQuery .= ")";
+		   	
+		   	$this->db->query( $dbQuery );
+			
+			if ($this->db->affected_rows() == 0) return false;
+			return true;
+		}
+		
 		//REMOVE FROM COLLECTION
+		
+		function remove_categoria ($idcategoria)
+		{
+			(string) $dbQuery     = "";
+			
+			$dbQuery = "DELETE FROM $this->categoria_rel_table ";
+			$dbQuery.= " WHERE $this->idtipoacompanamiento_field = $this->idtipoacompanamiento ";
+			$dbQuery.= " AND ";
+			$dbQuery.= " $this->categoria_relN_field = $idcategoria ";
+			
+			$this->db->query( $dbQuery );
+			
+			if ($this->db->affected_rows() == 0) return false;               
+			return true;
+		}  		
 		
 		
 		//GETTERS AND SETTERS

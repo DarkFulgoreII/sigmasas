@@ -1,6 +1,3 @@
-<div class="well">
-<p><h4><strong>Sigma SAS</strong> - Sistema de registro de asistencia y seguimiento del programa Sigma</h4></p>
-</div>
 <div class="container">
   <ul class="nav nav-tabs">
     <li class="active"><a href="<?=SITE?>index.php">Inicio</a></li>
@@ -20,7 +17,8 @@
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Acompañamiento <span class="caret"></span></a>
       <ul class="dropdown-menu">
-        <li><a href="<?=SITE?>web/registrarAcompanamiento.php" >Registro de acompañamiento a estudiantes</a></li>                        
+        <li><a href="<?=SITE?>web/registrarAcompanamiento.php" >Registro de acompañamiento a estudiantes</a></li>  
+        <li><a href="<?=SITE?>web/registrarAcompanamientoMasivo.php" >Registro de acompañamiento (varios a la vez)</a></li>                      
       </ul>
     </li>
     <li class="dropdown">

@@ -142,7 +142,7 @@
 		</script>
 	</head>
 	<body>
-		<div class="well" ><img src="../img/cabezote.png" class="img-responsive" alt="Sigma" width="1055" height="118"></div>
+		<?include("../inc/header.php");?>
 		
 		<?include ("../inc/menu.php");?>
 
@@ -304,7 +304,7 @@
 								<tr>
 									<td><small><?= $estudiante->get_codigouniandes() ?></small></td>
 									<td><small><? eecho($estudiante->get_apellido1());  ?> <? eecho($estudiante->get_apellido2()); ?></small></td>
-									<td><small><?= $estudiante->get_nombres() ?></small></td>
+									<td><small><?= $estudiante->get_nombres() ?> <?if($estudiante->get_desactivado()==1):?>(Retirado)<?endif;?></small></td>
 									
 									<?foreach ($actividades as $actividad ) :?>
 										<?
@@ -433,10 +433,6 @@
 				include(WEB_PATH."denegado.php");
 			endif;
 		?>
-	<div class="panel-footer">
-			<?if (isset($_SESSION["userName"])): ?>
-				Usuario : <?=$_SESSION["userName"]?>  
-			<? endif; ?>
-		</div>
+		<?include("../inc/footer.php");?>
 	</body>
 </html>

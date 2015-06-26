@@ -15,6 +15,7 @@
 		var $nombre; // (varchar)
 		var $descripcion; // (varchar)
 		var $orden; // (int)
+		var $multiple; // (tinyint)
 		
 		//collections
 		
@@ -34,6 +35,7 @@
 		var $nombre_field="nombre";
 		var $descripcion_field="descripcion";
 		var $orden_field="orden";
+		var $multiple_field="multiple";
 		
 		//relation table names
 		
@@ -62,6 +64,7 @@
 				$this->nombre = $this->db->f($this->nombre_field);
 				$this->descripcion = $this->db->f($this->descripcion_field);
 				$this->orden = $this->db->f($this->orden_field);
+				$this->multiple = $this->db->f($this->multiple_field);
 				//elements
 				
 				return true;
@@ -72,6 +75,7 @@
 		
 		function load_aspecto_collection()
 		{
+			$this->aspecto_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->aspecto_rel_table WHERE $this->idcategoria = $this->idcategoria_field";
 			$this->db->query( $dbQuery );
@@ -124,6 +128,7 @@
 			$dbQuery .= $this->nombre_field.",";
 			$dbQuery .= $this->descripcion_field.",";
 			$dbQuery .= $this->orden_field.",";
+			$dbQuery .= $this->multiple_field.",";
 			
 			$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
 			$dbQuery .= ") ";
@@ -132,6 +137,7 @@
 			$dbQuery .= " '$this->nombre',";
 			$dbQuery .= " '$this->descripcion',";
 			$dbQuery .= "  $this->orden ,";
+			if($this->multiple == false) $dbQuery .= "0,"; else $dbQuery .= "1,";
 			
 		   	
 		   	$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
@@ -167,6 +173,8 @@
 			$dbQuery .= "$this->nombre_field = '$this->nombre',";
 			$dbQuery .= "$this->descripcion_field = '$this->descripcion',";
 			$dbQuery .= "$this->orden_field =  $this->orden ,";
+			$dbQuery .= "$this->multiple_field = ";
+			if($this->multiple == false) $dbQuery .= "0,"; else $dbQuery .= "1,";
 			
 		   	
 		   	$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
@@ -256,6 +264,15 @@
 		function set_orden($value)
 		{
 			$this->orden = $value;
+		}
+		
+		function get_multiple()
+		{
+			return $this->multiple;
+		}
+		function set_multiple($value)
+		{
+			$this->multiple = $value;
 		}
 		
 		//elements

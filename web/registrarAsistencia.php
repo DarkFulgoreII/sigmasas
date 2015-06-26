@@ -143,7 +143,7 @@
 	</head>
 	<body>
 		<? if((!isset($_REQUEST["action"]))||(isset($_REQUEST["action"]) && $_REQUEST["action"] != "imprimir")): ?>
-			<div class="well" ><img src="../img/cabezote.png" class="img-responsive" alt="Sigma" width="1055" height="118"></div>
+			<?include("../inc/header.php");?>
 		<?endif;?>
 		
 		<?if((!isset($_REQUEST["action"]))||(isset($_REQUEST["action"]) && $_REQUEST["action"] != "imprimir")) include ("../inc/menu.php");?>
@@ -331,9 +331,11 @@
 							</tr>
 							<? foreach($estudiantes as $estudiante):?>
 								<tr>
+									
 									<td><small><?= $estudiante->get_codigouniandes() ?></small></td>
 									<td><small><? eecho($estudiante->get_apellido1());  ?> <? eecho($estudiante->get_apellido2()); ?></small></td>
-									<td><small><?= $estudiante->get_nombres() ?></small></td>
+									<td><small><?= $estudiante->get_nombres() ?> <?if($estudiante->get_desactivado()==1):?>(Retirado)<?endif;?></small></td>
+
 									<?
 										$activaasiste = "";
 										$activajustifica = "";
@@ -452,10 +454,7 @@
 			endif;
 		?>
 		<? if(((!isset($_REQUEST["action"]))||(isset($_REQUEST["action"]) && $_REQUEST["action"] != "imprimir")) && isset($_SESSION["userName"])): ?>
-			<div class="panel-footer">
-			
-				Usuario : <?=$_SESSION["userName"]?>  
-			</div>
+			<?include("../inc/footer.php");?>
 		<? endif; ?>
 	</body>
 </html>

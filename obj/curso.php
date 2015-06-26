@@ -78,6 +78,7 @@
 		
 		function load_actividad_collection()
 		{
+			$this->actividad_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->actividad_rel_table WHERE $this->idcurso = $this->idcurso_field";
 			$this->db->query( $dbQuery );
@@ -98,6 +99,7 @@
 		
 		function load_seccion_collection()
 		{
+			$this->seccion_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->seccion_rel_table WHERE $this->idcurso = $this->idcurso_field";
 			$this->db->query( $dbQuery );

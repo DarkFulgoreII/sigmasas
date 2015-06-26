@@ -126,6 +126,7 @@
 		
 		function load_acompanamiento_collection()
 		{
+			$this->acompanamiento_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->acompanamiento_rel_table WHERE $this->idsigmasas = $this->idsigmasas_field";
 			$this->db->query( $dbQuery );
@@ -146,6 +147,7 @@
 		
 		function load_curso_collection()
 		{
+			$this->curso_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->curso_rel_table WHERE $this->idsigmasas = $this->idsigmasas_field";
 			$this->db->query( $dbQuery );
@@ -166,6 +168,7 @@
 		
 		function load_estudiante_collection()
 		{
+			$this->estudiante_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->estudiante_rel_table WHERE $this->idsigmasas = $this->idsigmasas_field";
 			$this->db->query( $dbQuery );
@@ -186,6 +189,7 @@
 		
 		function load_grupo_collection()
 		{
+			$this->grupo_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->grupo_rel_table WHERE $this->idsigmasas = $this->idsigmasas_field";
 			$this->db->query( $dbQuery );
@@ -206,6 +210,7 @@
 		
 		function load_rol_collection()
 		{
+			$this->rol_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->rol_rel_table WHERE $this->idsigmasas = $this->idsigmasas_field";
 			$this->db->query( $dbQuery );
@@ -226,6 +231,7 @@
 		
 		function load_usuario_collection()
 		{
+			$this->usuario_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->usuario_rel_table WHERE $this->idsigmasas = $this->idsigmasas_field";
 			$this->db->query( $dbQuery );
@@ -246,6 +252,7 @@
 		
 		function load_bloque_collection()
 		{
+			$this->bloque_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->bloque_rel_table WHERE $this->idsigmasas = $this->idsigmasas_field";
 			$this->db->query( $dbQuery );
@@ -266,6 +273,7 @@
 		
 		function load_semana_collection()
 		{
+			$this->semana_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->semana_rel_table WHERE $this->idsigmasas = $this->idsigmasas_field";
 			$this->db->query( $dbQuery );
@@ -286,6 +294,7 @@
 		
 		function load_categoria_collection()
 		{
+			$this->categoria_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->categoria_rel_table WHERE $this->idsigmasas = $this->idsigmasas_field";
 			$this->db->query( $dbQuery );
@@ -306,6 +315,7 @@
 		
 		function load_tipoacompanamiento_collection()
 		{
+			$this->tipoacompanamiento_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->tipoacompanamiento_rel_table WHERE $this->idsigmasas = $this->idsigmasas_field";
 			$this->db->query( $dbQuery );

@@ -186,7 +186,7 @@
 		?>
 	</head>
 	<body>
-		<div class="well" ><img src="../img/cabezote.png" class="img-responsive" alt="Sigma" width="1055" height="118"></div>
+		<?include("../inc/header.php");?>
 		
 		<?include ("../inc/menu.php");?>
 
@@ -408,10 +408,6 @@
 				include(WEB_PATH."denegado.php");
 			endif;
 		?>
-	<div class="panel-footer">
-			<?if (isset($_SESSION["userName"])): ?>
-				Usuario : <?=$_SESSION["userName"]?>  
-			<? endif; ?>
-		</div>
+		<?include("../inc/footer.php");?>
 	</body>
 </html>

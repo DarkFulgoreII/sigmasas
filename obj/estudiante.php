@@ -222,6 +222,7 @@
 		
 		function load_asistencia_collection()
 		{
+			$this->asistencia_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->asistencia_rel_table WHERE $this->idestudiante = $this->idestudiante_field";
 			$this->db->query( $dbQuery );
@@ -242,6 +243,7 @@
 		
 		function load_entrega_collection()
 		{
+			$this->entrega_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->entrega_rel_table WHERE $this->idestudiante = $this->idestudiante_field";
 			$this->db->query( $dbQuery );

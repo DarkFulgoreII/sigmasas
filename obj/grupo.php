@@ -66,6 +66,7 @@
 		
 		function load_estudiante_collection()
 		{
+			$this->estudiante_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->estudiante_rel_table WHERE $this->idgrupo = $this->idgrupo_field";
 			$this->db->query( $dbQuery );

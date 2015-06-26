@@ -69,6 +69,7 @@
 		
 		function load_rol_collection()
 		{
+			$this->rol_collection = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->rol_rel_table WHERE $this->idusuario = $this->idusuario_field";
 			$this->db->query( $dbQuery );
