@@ -369,7 +369,7 @@
 											}
 										?>
 										<td <?= $claseasiste ?>>
-											<textarea rows="2" cols="50" name="text_observaciones[<?= $estudiante->get_idestudiante() ?>]" id="text_observaciones[<?= $estudiante->get_idestudiante() ?>]"><?=$contenidoobservaciones?></textarea>
+											<textarea rows="2" cols="50" name="text_observaciones[<?= $estudiante->get_idestudiante() ?>]" id="text_observaciones[<?= $estudiante->get_idestudiante() ?>]"><? eecho ($contenidoobservaciones); ?></textarea>
 										</td>
 									<input type = "hidden" name= "estudiantes[] " id= "estudiantes[] " value = "<?= $estudiante->get_idestudiante()?>" />
 								</tr>

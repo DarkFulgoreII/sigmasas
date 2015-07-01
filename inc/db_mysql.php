@@ -43,7 +43,9 @@ class DB_Sql {
 
   /* public: constructor */
   function DB_Sql($query = "") {
+      
       $this->query($query);
+     //echo mysql_client_encoding() ;
   }
 
   /* public: some trivial reporting */
@@ -71,6 +73,8 @@ class DB_Sql {
     if ( 0 == $this->Link_ID ) {
 
       $this->Link_ID=@mysql_connect($Host, $User, $Password);
+      //mysql_set_charset('utf8',$this->Link_ID);
+
       if (!$this->Link_ID) {
         $this->halt("pconnect($Host, $User, \$Password) failed.");
         return 0;

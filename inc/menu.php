@@ -24,9 +24,12 @@
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reportes <span class="caret"></span></a>
       <ul class="dropdown-menu"> 
-        <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/asistencia/tablaAsistenciaConsolidada.rptdesign" >Tabla consolidada de asistencia</a></li> 
         <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/asistencia/reporteTotalAsistenciayEntregas.rptdesign" >Reporte total de asistencia y entregas por grupo</a></li>
         <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/asistencia/reporteTotalAsistenciayEntregasCoordinador.rptdesign" >Reporte total de asistencia y entregas por grupo (Coordinador)</a></li>
+        <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/asistencia/reporteTotalAsistenciayEntregasProfesor.rptdesign" >Reporte total de asistencia y entregas por grupo y curso (Profesor)</a></li>
+        <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/acompanamiento/reporteAcompanamientoCoordinador.rptdesign" >Reporte de acompañamiento (Coordinador)</a></li>
+        <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/acompanamiento/reporteAcompanamientoProfesor.rptdesign" >Reporte de acompañamiento (Profesor)</a></li>
+        
       </ul>
     </li>
     <?if(isset($_SESSION["role"] ) && $_SESSION["role"] == "ADMIN"):?>

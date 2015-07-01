@@ -16,8 +16,12 @@
  			$acompanamiento -> set_registradapor ($registradapor);
  			
  			$acompanamiento -> set_tipoacompanamiento_element($tipoacompanamiento);
- 			$acompanamiento -> set_asunto($asunto);
- 			$acompanamiento -> set_comentario($comentario);
+ 			
+ 			$asunto = mb_convert_encoding($asunto, "ISO-8859-1", "UTF-8");
+ 			$comentario = mb_convert_encoding($comentario, "ISO-8859-1", "UTF-8");
+
+ 			$acompanamiento -> set_asunto(($asunto));
+ 			$acompanamiento -> set_comentario(($comentario));
 
  			$acompanamiento->insert();
 
@@ -330,7 +334,12 @@
 						$asistencia-> set_asiste(false);
 					}
 
- 					if(isset($observaciones[$idestudiante])) $asistencia-> set_observaciones($observaciones[$idestudiante]);
+ 					if(isset($observaciones[$idestudiante])) 
+ 					{
+						$ob = $observaciones[$idestudiante];
+						$ob = mb_convert_encoding($ob, "ISO-8859-1", "UTF-8");
+						$asistencia-> set_observaciones($ob);
+ 					}
  					$asistencia->set_fecha ($fecha);
  					$asistencia->set_registradapor($registradapor);
  					$asistencia->set_seccion_element($seccion);
@@ -342,7 +351,12 @@
  				{
  					if(isset($asistencias[$idestudiante])) $asistencia-> set_asiste(true); else $asistencia-> set_asiste(false);
  					if(isset($justificaciones[$idestudiante])) $asistencia-> set_justificacion(true); else $asistencia-> set_justificacion(false);
- 					if(isset($observaciones[$idestudiante])) $asistencia-> set_observaciones($observaciones[$idestudiante]);
+ 					if(isset($observaciones[$idestudiante])) 
+					{
+						$ob = $observaciones[$idestudiante];
+						$ob = mb_convert_encoding($ob, "ISO-8859-1", "UTF-8");
+						$asistencia-> set_observaciones($ob);
+					}
  					$asistencia->update();
  				}
  			}
@@ -397,7 +411,7 @@
  						if(isset($entregas[$idestudiante][$idactividad])) $entrega -> set_realizada (true);
  						else  $entrega -> set_realizada (false);
 
- 						if(isset($observaciones[$idestudiante][$idactividad])) $entrega->set_comentario($observaciones[$idestudiante][$idactividad]);
+ 						if(isset($observaciones[$idestudiante][$idactividad])) $entrega->set_comentario(mb_convert_encoding($observaciones[$idestudiante][$idactividad], "ISO-8859-1", "UTF-8"));
  						else $entrega->set_comentario("");
 
  						if(isset($calificaciones[$idestudiante][$idactividad])) $entrega->set_calificacion($calificaciones[$idestudiante][$idactividad]);
@@ -415,7 +429,7 @@
  						if(isset($entregas[$idestudiante][$idactividad])) $entrega -> set_realizada (true);
  						else  $entrega -> set_realizada (false);
  						
- 						if(isset($observaciones[$idestudiante][$idactividad])) $entrega->set_comentario($observaciones[$idestudiante][$idactividad]);
+ 						if(isset($observaciones[$idestudiante][$idactividad])) $entrega->set_comentario(mb_convert_encoding($observaciones[$idestudiante][$idactividad], "ISO-8859-1", "UTF-8"));
  						else $entrega->set_comentario("");
 
  						if(isset($calificaciones[$idestudiante][$idactividad])) $entrega->set_calificacion($calificaciones[$idestudiante][$idactividad]);

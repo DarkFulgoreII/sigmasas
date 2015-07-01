@@ -249,10 +249,9 @@
 															}
 															?>
 																<td <?= $claseasiste ?>>
-																	
 																	<span 
 																		class="<?= $icono_asiste?>"
-																		title="Sesión: <? eecho($fecha);  ?> - Bloque: <? eecho($bloque);  ?>"
+																		title="Observaciones: <? eecho($asistencia_fecha_bloque->get_observaciones()); ?>"
 																		>
 																	</span>
 																	<small><?if($asistencia_fecha_bloque->get_justificacion()=="1") eecho ("(Justificada)");?></small>

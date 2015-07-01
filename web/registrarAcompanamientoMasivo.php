@@ -279,7 +279,7 @@
 								value="Guardar Registros de acompañamiento" 
 							/>
 							<a 
-								href="./registrarAcompañamientoMasivo.php" 
+								href="./registrarAcompanamientoMasivo.php" 
 								class="btn btn-default btn-sm"
 							>Volver</a>
 						</center>
@@ -293,7 +293,7 @@
 					    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 					    El registro de acompañamiento ha sido guardado <strong>exitosamente</strong>
 					</div>
-					<center><a href="./registrarAcompañamientoMasivo.php" class="btn btn-default btn-sm">Volver</a></center>
+					<center><a href="./registrarAcompanamientoMasivo.php" class="btn btn-default btn-sm">Volver</a></center>
 				</div>
 			<? }?> 
 		<?

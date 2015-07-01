@@ -392,7 +392,7 @@
 														cols="50" 
 														name="text_observaciones[<?= $estudiante->get_idestudiante() ?>][<?= $actividad->get_idactividad() ?>]" 
 														id="text_observaciones[<?= $estudiante->get_idestudiante() ?>][<?= $actividad->get_idactividad() ?>]"
-													><?=$contenidoobservaciones?></textarea>
+													><? eecho($contenidoobservaciones); ?></textarea>
 												</small>
 											<div>
 										</td>
