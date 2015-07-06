@@ -17,7 +17,7 @@
 	define("INC_PATH","../inc/");
 	define("WEB_PATH","../web/");
 
-	define("DEBUG_MODE", "OFF");
+	define("DEBUG_MODE", "ON");
 	define("SUPPLANT_MODE", "OFF");
 	define("SUPPLANT_USER", "am.molano10");
 	define("SUPPLANT_ROLE", "MONITOR");

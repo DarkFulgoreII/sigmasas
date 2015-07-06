@@ -20,6 +20,21 @@
 			$resultado .='</select>';
 			$serviceresult = $resultado;
 		}
+		else if ($_REQUEST['service']=='darActividadesPorCursoSemana' )
+		{
+			$idcurso = $_REQUEST['idcurso'];
+			$numerosemana = $_REQUEST['numerosemana'];
+			
+			$entregas = $helper->darActividadesPorCursoSemana($idcurso, $numerosemana );
+
+			$resultado = '<select class="form-control" name = "combo_actividad" id="combo_actividad">';
+			foreach ($entregas as $ent) 
+			{
+				$resultado .='<option value="'.$ent->get_idactividad().'">'.utf8_encode($ent->get_nombre()).'</option>';
+			}
+			$resultado .='</select>';
+			$serviceresult = $resultado;
+		}
 		eecho($serviceresult);	
 	}
 ?>

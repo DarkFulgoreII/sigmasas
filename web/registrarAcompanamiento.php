@@ -177,7 +177,7 @@
 												rows="6" 
 												cols="100" 
 												name="text_asunto" 
-												name="text_asunto" 
+												id="text_asunto" 
 											></textarea>
 										</center>
 									</div>
@@ -197,7 +197,7 @@
 												rows="6" 
 												cols="100" 
 												name="text_comentario" 
-												name="text_comentario" 
+												id="text_comentario" 
 											></textarea>
 										</center>
 									</div>

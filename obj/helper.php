@@ -7,6 +7,24 @@
  		{
  			$this->contenedor = $cont;
  		}
+ 		function darActividadesPorCursoSemana($idcurso, $numerosemana )
+ 		{
+ 			$curso = new curso($idcurso); $curso->load();
+
+ 			$actividades = $curso->get_actividad_collection();
+ 			
+ 			$respuesta = array();
+ 			foreach($actividades as $actividad)
+ 			{
+ 				if($actividad->get_numerosemana()==$numerosemana)
+ 				{
+ 					$respuesta[]=$actividad;
+ 				}
+ 			}
+ 			//print_recursive("respuesta", $respuesta);
+ 			return $respuesta;
+ 		}
+
  		function guardarNuevoAcompanamiento($registradapor, $fecha, $estudiante, $tipoacompanamiento, $aspectos, $asunto, $comentario)
  		{
  			$acompanamiento = new acompanamiento();

@@ -322,20 +322,21 @@
 						<input type = "hidden" name= "hidden_seccion" id= "hidden_seccion" value = "<?=$seccion->get_idseccion()?>" />
 						<table class="table table-hover">	
 							<tr>
-								<th><h4>Código</h4></th>
-								<th><h4>Apellidos</h4></th>
-								<th><h4>Nombres</h4></th>
-								<th><h4>Asiste</h4></th>
-								<th><h4>Justificación</h4></th>
-								<th><h4>Observaciones</h4></th>
+								<th>Código</th>
+								<th>Estudiante</th>
+								<th>Asiste</th>
+								<th>Justificación</th>
+								<th>Observaciones</th>
 							</tr>
 							<? foreach($estudiantes as $estudiante):?>
 								<tr>
 									
-									<td><small><?= $estudiante->get_codigouniandes() ?></small></td>
-									<td><small><? eecho($estudiante->get_apellido1());  ?> <? eecho($estudiante->get_apellido2()); ?></small></td>
-									<td><small><?= $estudiante->get_nombres() ?> <?if($estudiante->get_desactivado()==1):?>(Retirado)<?endif;?></small></td>
-
+									<td><font size="1"><?= $estudiante->get_codigouniandes() ?></font></td>
+									<td>
+										<font size="1">
+											<? eecho($estudiante->get_apellido1());  ?> <? eecho($estudiante->get_apellido2()); ?> <?= $estudiante->get_nombres() ?><?if($estudiante->get_desactivado()==1):?> (Retirado) <?endif;?>
+										</font>
+									</td>
 									<?
 										$activaasiste = "";
 										$activajustifica = "";
@@ -404,16 +405,16 @@
 						<table class="table table-bordered table-condensed">	
 							<tr>
 								<td class="small"><font size="1"><strong>Código</strong></font></td>
-								<td class="small"><font size="1"><strong>Apellidos</strong></font></td>
-								<td class="small"><font size="1"><strong>Nombres</strong></font></td>
+								<td class="small"><font size="1"><strong>Estudiante</strong></font></td>
 								<td class="small"><font size="1"><strong>Firma</strong></font></td>
-								
 							</tr>
 							<? foreach($estudiantes as $estudiante):?>
 								<tr>
 									<td class="small"><font size="1"><?= $estudiante->get_codigouniandes() ?></font></td>
-									<td class="small"><font size="1"><? eecho($estudiante->get_apellido1());  ?> <? eecho($estudiante->get_apellido2()); ?></font></td>
-									<td class="small"><font size="1"><?= $estudiante->get_nombres() ?></font></td>
+									<td class="small">
+									<font size="1">
+										<? eecho($estudiante->get_apellido1());  ?> <? eecho($estudiante->get_apellido2()); ?> <?= $estudiante->get_nombres() ?> <?if($estudiante->get_desactivado()==1):?>(Retirado)<?endif;?>
+									</font></td>
 									<td width="30%"></td>
 								</tr>
 							<? endforeach; ?>

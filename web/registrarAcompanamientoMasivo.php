@@ -188,15 +188,15 @@
 						<input type = "hidden" name= "hidden_tipoacompanamiento" id= "hidden_tipoacompanamiento" value = "<?=$_REQUEST['combo_tipoacompanamiento']?>" />
 						<table class="table table-hover">	
 							<tr>
-								<th colspan = "3"><h4>Datos básicos</h4></th>
-								<th colspan="<?= count($categorias) ?>"><h4>Categorías</h4></th>	
+								<th colspan = "2">Datos básicos</th>
+								<th colspan="<?= count($categorias) ?>">Categorías</th>	
 								<th colspan = "2">  Observaciones </th>
 								<th> Guardar </th>
 							</tr>
 							<tr>
 								<th><h4>Código</h4></th>
-								<th><h4>Apellidos</h4></th>
-								<th><h4>Nombres</h4></th>
+								<th><h4>Estudiante</h4></th>
+								
 								<?foreach ($categorias as $categoria ) :?>
 									<th><h4><?eecho($categoria->get_nombre());?></h4></th>
 								<?endforeach;?>
@@ -206,25 +206,38 @@
 							</tr>
 							<? foreach($estudiantes as $estudiante):?>
 								<tr>
-									<td><small><?= $estudiante->get_codigouniandes() ?></small></td>
-									<td><small><? eecho($estudiante->get_apellido1());  ?> <? eecho($estudiante->get_apellido2()); ?></small></td>
-									<td><small><?= $estudiante->get_nombres() ?></small></td>
+									<td><font size="1"><?= $estudiante->get_codigouniandes() ?></font></td>
+									<td>
+										<font size="1">
+											<? eecho($estudiante->get_apellido1());  ?> <? eecho($estudiante->get_apellido2()); ?> <? eecho($estudiante->get_nombres()); ?> <?if($estudiante->get_desactivado()==1):?> (Retirado) <?endif;?>
+										</font>
+									</td>
+									
 									<?foreach ($categorias as $categoria ) :?>
 										<?if($categoria->get_multiple()==1):?>
 											<td>
-												<? foreach($categoria->get_aspecto_collection() as $aspecto): ?>
-													<li>
-														<small>
-															<input 
-																type="checkbox" 
-																name="checkbox_aspectos[<?= $estudiante->get_idestudiante() ?>][<?=$aspecto->get_idaspecto()?>]" 
-																name="checkbox_aspectos[<?= $estudiante->get_idestudiante() ?>][<?=$aspecto->get_idaspecto()?>]" 
-																onClick="document.getElementById('guardar_acompanamiento[<?= $estudiante->get_idestudiante() ?>]').checked = true;"
-															/>
-															<?eecho($aspecto->get_nombre());?>
-														</small>
-													</li>
-												<?endforeach;?>
+												<table>
+													<? foreach($categoria->get_aspecto_collection() as $aspecto): ?>
+														<tr>
+															<td>
+																<font size="1">
+																	<div class="checkbox">
+																		<label>
+																			<input 
+																				type="checkbox" 
+																				name="checkbox_aspectos[<?= $estudiante->get_idestudiante() ?>][<?=$aspecto->get_idaspecto()?>]" 
+																				name="checkbox_aspectos[<?= $estudiante->get_idestudiante() ?>][<?=$aspecto->get_idaspecto()?>]" 
+																				onClick="document.getElementById('guardar_acompanamiento[<?= $estudiante->get_idestudiante() ?>]').checked = true;"
+																			>
+																				<?eecho($aspecto->get_nombre());?>
+																			</input>
+																		</label>
+																	</div>
+																</font>
+															</td>
+														</tr>
+													<?endforeach;?>
+												</table>
 											</td>
 										<?else: ?>
 											<td>
@@ -233,6 +246,7 @@
 													name = "combo_aspectos[<?= $estudiante->get_idestudiante() ?>][<?= $categoria->get_idcategoria() ?>]" 
 													id="combo_aspectos[<?= $estudiante->get_idestudiante() ?>][<?= $categoria->get_idcategoria() ?>]"
 													onClick="document.getElementById('guardar_acompanamiento[<?= $estudiante->get_idestudiante() ?>]').checked = true;"
+													style="font-size:9px;"
 												>
 													<? foreach($categoria->get_aspecto_collection() as $aspecto): ?>	
 									  					<option value="<?= $aspecto->get_idaspecto() ?>"  ><?= eecho ($aspecto->get_nombre()) ?></option>
@@ -243,8 +257,8 @@
 									<?endforeach;?>
 									<td>
 										<textarea 
-											rows="2" 
-											cols="50" 
+											rows="4" 
+											cols="25" 
 											name="text_asunto[<?= $estudiante->get_idestudiante() ?>]" 
 											id="text_asunto[<?= $estudiante->get_idestudiante() ?>]"
 											oninput="document.getElementById('guardar_acompanamiento[<?= $estudiante->get_idestudiante() ?>]').checked = true;"
@@ -252,19 +266,23 @@
 									</td>
 									<td>
 										<textarea 
-											rows="2" 
-											cols="50" 
+											rows="4" 
+											cols="25" 
 											name="text_observaciones[<?= $estudiante->get_idestudiante() ?>]" 
 											id="text_observaciones[<?= $estudiante->get_idestudiante() ?>]"
 											oninput="document.getElementById('guardar_acompanamiento[<?= $estudiante->get_idestudiante() ?>]').checked = true;"
 										></textarea>
 									</td>
 									<td>
-										<input 
-											type="checkbox" 
-											name="guardar_acompanamiento[<?= $estudiante->get_idestudiante() ?>]" 
-											id="guardar_acompanamiento[<?= $estudiante->get_idestudiante() ?>]" 
-										/>Guardar
+										<div class="checkbox">
+											<label>
+												<input 
+													type="checkbox" 
+													name="guardar_acompanamiento[<?= $estudiante->get_idestudiante() ?>]" 
+													id="guardar_acompanamiento[<?= $estudiante->get_idestudiante() ?>]" 
+												><font size = "1">Guardar</font></input>
+											</label>
+										</div>
 									</td>
 									<input type = "hidden" name= "estudiantes[] " id= "estudiantes[] " value = "<?= $estudiante->get_idestudiante()?>" />
 								</tr>

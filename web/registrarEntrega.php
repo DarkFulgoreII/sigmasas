@@ -242,20 +242,20 @@
 						<input type = "hidden" name= "hidden_semana" id= "hidden_semana" value = "<?=$_REQUEST['combo_semana']?>" />
 						<table class="table table-hover">	
 							<tr>
-								<th colspan = "3"><h4>Datos básicos</h4></th>
-								<th colspan="<?= count($actividades)*2 ?>"><h4>Actividades</h4></th>	
+								<th colspan = "3">Datos básicos</th>
+								<th colspan="<?= count($actividades)*2 ?>">Actividades</th>	
 							</tr>
 							<tr>
-								<th><h4>Código</h4></th>
-								<th><h4>Apellidos</h4></th>
-								<th><h4>Nombres</h4></th>
+								<th>Código</th>
+								<th>Estudiante</th>
+								
 								<?foreach ($actividades as $actividad ) :?>
 									<th colspan="2">
 										<small>
 											<table>
 												<tr>
 													<td colspan="2">
-														<font size="2" >
+														<font size="3" >
 															<?eecho( $actividad->get_nombre() );?>
 														</font>
 													</td>
@@ -302,10 +302,13 @@
 							</tr>
 							<? foreach($estudiantes as $estudiante):?>
 								<tr>
-									<td><small><?= $estudiante->get_codigouniandes() ?></small></td>
-									<td><small><? eecho($estudiante->get_apellido1());  ?> <? eecho($estudiante->get_apellido2()); ?></small></td>
-									<td><small><?= $estudiante->get_nombres() ?> <?if($estudiante->get_desactivado()==1):?>(Retirado)<?endif;?></small></td>
-									
+									<td><font size="1"><?= $estudiante->get_codigouniandes() ?></font></td>
+									<td>
+										<font size="1">
+											<? eecho($estudiante->get_apellido1());  ?> <? eecho($estudiante->get_apellido2()); ?> <?= $estudiante->get_nombres() ?> <?if($estudiante->get_desactivado()==1):?>(Retirado)<?endif;?>
+										</font>
+									</td>
+																		
 									<?foreach ($actividades as $actividad ) :?>
 										<?
 											$activaentrega = "";
