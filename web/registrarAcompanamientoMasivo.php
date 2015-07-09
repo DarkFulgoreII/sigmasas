@@ -154,7 +154,7 @@
 				}else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "generar"){ 
 			?>
 				<div class="well">
-					<h4>Registro de entregas</h4>
+					<h4>Registro de acompañamiento</h4>
 					<table class="table table-bordered">
 						<tr>
 							<th>
