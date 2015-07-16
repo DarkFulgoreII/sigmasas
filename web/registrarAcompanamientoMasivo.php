@@ -71,9 +71,12 @@
 		{
 			$estudiante = new estudiante ($idestudiante);$estudiante->load();
 			$aspectos = $aspectosmultiples[$idestudiante];
-			foreach ($aspectossimples[$idestudiante] as $aspectocategoria) 
+			if (isset($aspectossimples[$idestudiante]))
 			{
-				$aspectos[$aspectocategoria] = "on"; 	
+				foreach ($aspectossimples[$idestudiante] as $aspectocategoria) 
+				{
+					$aspectos[$aspectocategoria] = "on"; 	
+				}	
 			}
 			$asunto = $asuntos[$idestudiante];
 			$comentario = $comentarios[$idestudiante];

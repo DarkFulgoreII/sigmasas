@@ -29,9 +29,19 @@
         <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/asistencia/reporteTotalAsistenciayEntregasProfesor.rptdesign" >Reporte total de asistencia y entregas por grupo y curso (Profesor)</a></li>
         <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/acompanamiento/reporteAcompanamientoCoordinador.rptdesign" >Reporte de acompañamiento (Coordinador)</a></li>
         <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/acompanamiento/reporteAcompanamientoProfesor.rptdesign" >Reporte de acompañamiento (Profesor)</a></li>
-        
+        <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/acompanamiento/reporteAcompanamientoGestor.rptdesign" >Reporte de acompañamiento (Gestor)</a></li>
       </ul>
     </li>
+    <?if(isset($_SESSION["role"] ) && $_SESSION["role"] == "ADMIN"):?>
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Indicadores de evaluación <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+          <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/evaluacion/reporteIndicadoresEvaluacionEspanol.rptdesign" >Reporte de indicadores de Español</a></li>
+          <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/evaluacion/reporteIndicadoresEvaluacionPrecalculo.rptdesign" >Reporte de indicadores de Precálculo</a></li>
+          <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/evaluacion/reporteIndicadoresEvaluacionVidaUniversitaria.rptdesign" >Reporte de indicadores de Vida Universitaria</a></li>                      
+      </ul>
+    </li>
+    <?endif;?>
     <?if(isset($_SESSION["role"] ) && $_SESSION["role"] == "ADMIN"):?>
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Opciones administrativas <span class="caret"></span></a>
