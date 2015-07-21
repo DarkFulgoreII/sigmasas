@@ -48,7 +48,8 @@
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Opciones administrativas <span class="caret"></span></a>
       <ul class="dropdown-menu">
         <li><a href="<?=SITE?>web/moverReportesAsistencia.php" >Mover registros de asistencia</a></li>  
-        <li><a href="<?=SITE?>web/limpiarReportesAsistencia.php" >Limpiar registros de asistencia</a></li>                      
+        <li><a href="<?=SITE?>web/limpiarReportesAsistencia.php" >Limpiar registros de asistencia</a></li>
+        <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/mesaAyuda/casosMesaAyuda.rptdesign" >Reporte de casos de la mesa de ayuda</a></li>                      
       </ul>
     </li>
     <?endif;?>
