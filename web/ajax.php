@@ -35,6 +35,7 @@
 			$resultado .='</select>';
 			$serviceresult = $resultado;
 		}
+		
 		eecho($serviceresult);	
 	}
 ?>

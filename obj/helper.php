@@ -7,6 +7,22 @@
  		{
  			$this->contenedor = $cont;
  		}
+ 		function darAcompanamientosPorEstudiante($idestudiante )
+ 		{
+ 			$resultado = array();
+ 			//print_variable("numero de acompanamientos",count($this->contenedor->get_acompanamiento_collection()));
+ 			foreach($this->contenedor->get_acompanamiento_collection() as $acompanamiento)
+ 			{
+ 				foreach ($acompanamiento->get_estudiante_collection() as $estudiante) 
+ 				{
+ 					if($estudiante->get_idestudiante() == $idestudiante)
+ 					{
+ 						$resultado []=$acompanamiento;
+ 					}
+ 				}
+ 			}
+ 			return $resultado;
+ 		}
  		function darActividadesPorCursoSemana($idcurso, $numerosemana )
  		{
  			$curso = new curso($idcurso); $curso->load();
@@ -24,7 +40,32 @@
  			//print_recursive("respuesta", $respuesta);
  			return $respuesta;
  		}
+ 		function actualizarAcompanamiento($idacompanamientoexistente, $registradapor,$fecha, $estudiante, $tipoacompanamiento, $aspectos, $asunto, $comentario)
+ 		{
+ 			$acompanamiento = new acompanamiento($idacompanamientoexistente);
+ 			$acompanamiento->load();
+ 			$acompanamiento -> set_registradapor ($registradapor);
+ 			$acompanamiento -> set_tipoacompanamiento_element($tipoacompanamiento);
 
+ 			$asunto = mb_convert_encoding($asunto, "ISO-8859-1", "UTF-8");
+ 			$comentario = mb_convert_encoding($comentario, "ISO-8859-1", "UTF-8");
+
+ 			$acompanamiento -> set_asunto(($asunto));
+ 			$acompanamiento -> set_comentario(($comentario));
+
+ 			$acompanamiento -> update();
+
+ 			//eliminar aspectos previamente existentes
+ 			foreach($acompanamiento->get_aspecto_collection() as $aspectoex)
+ 			{
+ 				$acompanamiento->remove_aspecto($aspectoex->get_idaspecto());
+ 			}
+ 			//agregar los nuevos
+			foreach ($aspectos as $idaspecto => $value) 
+ 			{
+ 				$acompanamiento -> add_aspecto($idaspecto);
+ 			}
+ 		}
  		function guardarNuevoAcompanamiento($registradapor, $fecha, $estudiante, $tipoacompanamiento, $aspectos, $asunto, $comentario)
  		{
  			$acompanamiento = new acompanamiento();
@@ -42,6 +83,8 @@
  			$acompanamiento -> set_comentario(($comentario));
 
  			$acompanamiento->insert();
+ 			$this->contenedor->add_acompanamiento($acompanamiento->get_idacompanamiento());
+
 
  			$acompanamiento -> add_estudiante($estudiante->get_idestudiante());
 
@@ -49,6 +92,7 @@
  			{
  				$acompanamiento -> add_aspecto($idaspecto);
  			}
+
  		}
  		function darEstudiantesPorGrupo ($idgrupo)
  		{

@@ -19,6 +19,7 @@
       <ul class="dropdown-menu">
         <li><a href="<?=SITE?>web/registrarAcompanamiento.php" >Registro de acompañamiento a estudiantes</a></li>  
         <li><a href="<?=SITE?>web/registrarAcompanamientoMasivo.php" >Registro de acompañamiento (varios a la vez)</a></li>                      
+        <li><a href="<?=SITE?>web/verAcompanamiento.php" >Ver o modificar registros de acompañamiento</a></li>
       </ul>
     </li>
     <li class="dropdown">

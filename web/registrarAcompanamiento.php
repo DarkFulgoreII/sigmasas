@@ -55,7 +55,35 @@
 		$asunto = $_REQUEST['text_asunto'];
 		$comentario = $_REQUEST['text_comentario'];
 		$registradapor = $_SESSION['userName'];
-		$helper->guardarNuevoAcompanamiento($registradapor,$fecha, $estudiante, $tipoacompanamiento, $aspectos, $asunto, $comentario);
+
+		if(isset($_REQUEST['hidden_acompanamiento']))
+		{
+			$idacompanamientoexistente = $_REQUEST['hidden_acompanamiento'];
+			$helper->actualizarAcompanamiento($idacompanamientoexistente, $registradapor,$fecha, $estudiante, $tipoacompanamiento, $aspectos, $asunto, $comentario);
+		}
+		else
+		{
+			$helper->guardarNuevoAcompanamiento($registradapor,$fecha, $estudiante, $tipoacompanamiento, $aspectos, $asunto, $comentario);	
+		}
+	}
+	else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "modificar")
+	{
+		/*
+		[action] => guardar
+	    [idacompanamiento] => 12
+	    [idestudiante] => 10
+	    */
+	    $acompanamiento = new acompanamiento ($_REQUEST['idacompanamiento']); 
+	    $acompanamiento->load();
+	    $estudiante = new estudiante($_REQUEST['idestudiante']);
+	    $estudiante->load();
+
+	    $aspectosseleccionados = array();
+	    foreach($acompanamiento->get_aspecto_collection() as $aspectoseleccionado)
+	    {
+	    	$aspectosseleccionados[$aspectoseleccionado->get_idaspecto()]= $aspectoseleccionado;
+	    }
+
 	}
 ?>
 <html lang="es">
@@ -219,8 +247,153 @@
 							</tr>
 						</table>
 					</form>
-					<center><a href="./registrarEntrega.php" class="btn btn-default btn-sm">Volver</a></center>
+					<center><a href="./registrarAcompanamiento.php" class="btn btn-default btn-sm">Volver</a></center>
 				</div>
+			<? }else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "modificar") { ?>
+				<div class="well" >
+					
+					<h4>Modificar registro de acompañamiento</h4>
+					<form id = "frm_registrar" method = "POST" accept-charset="UTF-8" action="<?=$_SERVER['PHP_SELF']?>">
+						<input type = "hidden" name= "action" id= "action" value = "guardar" />
+						<input type = "hidden" name= "hidden_fecha" id= "hidden_fecha" value = "<?=$acompanamiento->get_fecha()?>" />
+						<input type = "hidden" name= "combo_estudiante" id= "combo_estudiante" value = "<?=$estudiante->get_idestudiante()?>" />
+						<input type = "hidden" name= "hidden_acompanamiento" id= "hidden_acompanamiento" value = "<?=$acompanamiento->get_idacompanamiento()?>" />
+
+						<table class="table table-bordered" >
+							<tr>
+								<th>
+									Estudiante: 
+								</th>
+								<td>
+									<? eecho ($estudiante->get_nombres()." ".$estudiante->get_apellido1()." ".$estudiante->get_apellido2() ) ; ?>
+								</td>
+							</tr>
+							<tr>
+								<th>
+									Fecha: 
+								</th>
+								<td>
+									<?=$acompanamiento->get_fecha()?>
+								</td>
+							</tr>
+							<tr>
+								<th>
+									Tipo de cita: 
+								</th>
+								<td>
+									<select 
+										class="form-control" 
+										name = "combo_tipoacompanamiento" 
+										id="combo_tipoacompanamiento"
+									>
+										<? foreach($tiposacompanamiento as $tipo): ?>
+											<?
+												$seleccionado = "";
+												$ta =  $acompanamiento->get_tipoacompanamiento_element();
+												if($ta->get_idtipoacompanamiento()==$tipo->get_idtipoacompanamiento())
+												{
+													$seleccionado = "selected";
+												}
+											?>
+						  					<option <?=$seleccionado?> value="<?= $tipo->get_idtipoacompanamiento() ?>" ><?= eecho ($tipo->get_nombre()) ?></option>
+						  				<? endforeach; ?>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<?foreach ($categorias as $categoria ) :?>
+										<div class="panel panel-default">
+										 	<div class="panel-heading">
+										 		<strong>
+										 			<? eecho ($categoria->get_nombre()); ?>
+										 		</strong>
+										 	</div>
+										  	<div class="panel-body row">
+										  		<?foreach($categoria->get_aspecto_collection() as $aspecto):?>
+											  		<div class="col-sm-4">
+												  		<?
+												  			//revisar si estaba previamente seleccionado
+													  		$aseleccionado = "";
+													  		if(isset($aspectosseleccionados[$aspecto->get_idaspecto()]))
+													  		{
+													  			$aseleccionado = "checked";
+													  		}
+
+												  		?>
+												  		<input 
+												  			<?=$aseleccionado?>
+												  			type="checkbox"
+												  			id="checkbox_aspecto[<?=$aspecto->get_idaspecto()?>]"
+												  			name="checkbox_aspecto[<?=$aspecto->get_idaspecto()?>]"
+												  		>
+												  			<? eecho ($aspecto->get_nombre());?>
+												  		</input>
+												  	</div>
+											  	<? endforeach; ?>
+										  	</div>
+										</div>
+									<? endforeach; ?>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="panel panel-default">
+									 	<div class="panel-heading">
+									 		<strong>Descripción / asunto</strong>
+									 	</div>
+									</div>
+									<div class="panel-body">
+										<center>
+											<textarea 
+												style="font-size: 10px;" 
+												rows="6" 
+												cols="100" 
+												name="text_asunto" 
+												id="text_asunto" 
+											><?eecho ($acompanamiento->get_asunto());?></textarea>
+										</center>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="panel panel-default">
+									 	<div class="panel-heading">
+									 		<strong>Acuerdos, compromisos y acciones realizadas</strong>
+									 	</div>
+									</div>
+									<div class="panel-body">
+										<center>
+											<textarea 
+												style="font-size: 10px;" 
+												rows="6" 
+												cols="100" 
+												name="text_comentario" 
+												id="text_comentario" 
+											><?eecho ($acompanamiento->get_comentario());?></textarea>
+										</center>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan= "4">
+									<center>
+										<input 
+											class="btn btn-default btn-sm" 
+											id = "submit_guardar" 
+											type = "submit" 
+											value="Guardar" 
+											onClick="document.getElementById('action').value='guardar';"
+										/>
+									</center>
+								</td>
+							</tr>
+						</table>
+					</form>
+					<center><a href="./registrarAcompanamiento.php" class="btn btn-default btn-sm">Volver</a></center>
+				</div>
+
 			<? }else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "guardar") { ?>
 				<div class="well">
 					<h4>Registro de acompañamiento</h4>
