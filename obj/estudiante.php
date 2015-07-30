@@ -64,6 +64,7 @@
 		var $codigouniandes; // (varchar)
 		var $correouniandes; // (varchar)
 		var $desactivado; // (tinyint)
+		var $moodleid; // (int)
 		
 		//collections
 		
@@ -132,6 +133,7 @@
 		var $codigouniandes_field="codigouniandes";
 		var $correouniandes_field="correouniandes";
 		var $desactivado_field="desactivado";
+		var $moodleid_field="moodleid";
 		
 		//relation table names
 		
@@ -212,6 +214,7 @@
 				$this->codigouniandes = $this->db->f($this->codigouniandes_field);
 				$this->correouniandes = $this->db->f($this->correouniandes_field);
 				$this->desactivado = $this->db->f($this->desactivado_field);
+				$this->moodleid = $this->db->f($this->moodleid_field);
 				//elements
 				
 				return true;
@@ -360,6 +363,7 @@
 			$dbQuery .= $this->codigouniandes_field.",";
 			$dbQuery .= $this->correouniandes_field.",";
 			$dbQuery .= $this->desactivado_field.",";
+			$dbQuery .= $this->moodleid_field.",";
 			
 			$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
 			$dbQuery .= ") ";
@@ -416,6 +420,7 @@
 			$dbQuery .= " '$this->codigouniandes',";
 			$dbQuery .= " '$this->correouniandes',";
 			if($this->desactivado == false) $dbQuery .= "0,"; else $dbQuery .= "1,";
+			$dbQuery .= "  $this->moodleid ,";
 			
 		   	
 		   	$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
@@ -500,6 +505,7 @@
 			$dbQuery .= "$this->correouniandes_field = '$this->correouniandes',";
 			$dbQuery .= "$this->desactivado_field = ";
 			if($this->desactivado == false) $dbQuery .= "0,"; else $dbQuery .= "1,";
+			$dbQuery .= "$this->moodleid_field =  $this->moodleid ,";
 			
 		   	
 		   	$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
@@ -1057,6 +1063,15 @@
 		function set_desactivado($value)
 		{
 			$this->desactivado = $value;
+		}
+		
+		function get_moodleid()
+		{
+			return $this->moodleid;
+		}
+		function set_moodleid($value)
+		{
+			$this->moodleid = $value;
 		}
 		
 		//elements

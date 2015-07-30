@@ -17,6 +17,7 @@
 		
 		var $crn; // (varchar)
 		var $descripcion; // (varchar)
+		var $moodleid; // (int)
 		
 		//collections
 		
@@ -38,6 +39,7 @@
 		
 		var $crn_field="crn";
 		var $descripcion_field="descripcion";
+		var $moodleid_field="moodleid";
 		
 		//relation table names
 		
@@ -77,6 +79,7 @@
 				
 				$this->crn = $this->db->f($this->crn_field);
 				$this->descripcion = $this->db->f($this->descripcion_field);
+				$this->moodleid = $this->db->f($this->moodleid_field);
 				//elements
 				
 				$this->usuario_element = $this->db->f($this->usuario_rel1_field);
@@ -194,6 +197,7 @@
 		   	
 			$dbQuery .= $this->crn_field.",";
 			$dbQuery .= $this->descripcion_field.",";
+			$dbQuery .= $this->moodleid_field.",";
 			
 			$dbQuery .= "$this->usuario_rel1_field,";
 			$dbQuery .= "$this->grupo_rel1_field,";
@@ -203,6 +207,7 @@
 		   	
 			$dbQuery .= " '$this->crn',";
 			$dbQuery .= " '$this->descripcion',";
+			$dbQuery .= "  $this->moodleid ,";
 			
 			$dbQuery .= "$this->usuario_element,";
 			$dbQuery .= "$this->grupo_element,";
@@ -239,6 +244,7 @@
 			
 			$dbQuery .= "$this->crn_field = '$this->crn',";
 			$dbQuery .= "$this->descripcion_field = '$this->descripcion',";
+			$dbQuery .= "$this->moodleid_field =  $this->moodleid ,";
 			
 			$dbQuery .= "$this->usuario_rel1_field = $this->usuario_element,";
 			$dbQuery .= "$this->grupo_rel1_field = $this->grupo_element,";
@@ -357,6 +363,15 @@
 		function set_descripcion($value)
 		{
 			$this->descripcion = $value;
+		}
+		
+		function get_moodleid()
+		{
+			return $this->moodleid;
+		}
+		function set_moodleid($value)
+		{
+			$this->moodleid = $value;
 		}
 		
 		//elements

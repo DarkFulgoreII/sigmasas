@@ -31,6 +31,9 @@
         <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/acompanamiento/reporteAcompanamientoCoordinador.rptdesign" >Reporte de acompañamiento (Coordinador)</a></li>
         <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/acompanamiento/reporteAcompanamientoProfesor.rptdesign" >Reporte de acompañamiento (Profesor)</a></li>
         <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/acompanamiento/reporteAcompanamientoGestor.rptdesign" >Reporte de acompañamiento (Gestor)</a></li>
+        <?if(isset($_SESSION["role"] ) && $_SESSION["role"] == "ADMIN"):?>
+          <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/actividad/actividadPorEstudiante.rptdesign" >Reporte de actividad por grupo y curso</a></li>
+        <?endif;?>
       </ul>
     </li>
     <?if(isset($_SESSION["role"] ) && $_SESSION["role"] == "ADMIN"):?>
