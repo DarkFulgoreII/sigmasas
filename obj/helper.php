@@ -10,6 +10,27 @@
  		function darAcompanamientosPorEstudiante($idestudiante )
  		{
  			$resultado = array();
+ 			$ac = new acompanamiento();
+ 			$resultado = $ac->load_acompanamiento_by_estudiante_inverse($idestudiante);
+ 			return $resultado;
+ 			/*
+ 			$resultado = array();
+ 			//print_variable("numero de acompanamientos",count($this->contenedor->get_acompanamiento_collection()));
+ 			foreach($this->contenedor->get_acompanamiento_collection() as $acompanamiento)
+ 			{
+ 				foreach ($acompanamiento->get_estudiante_collection() as $estudiante) 
+ 				{
+ 					if($estudiante->get_idestudiante() == $idestudiante)
+ 					{
+ 						$resultado []=$acompanamiento;
+ 					}
+ 				}
+ 			}
+ 			return $resultado;
+
+ 			*/
+
+ 			$resultado = array();
  			//print_variable("numero de acompanamientos",count($this->contenedor->get_acompanamiento_collection()));
  			foreach($this->contenedor->get_acompanamiento_collection() as $acompanamiento)
  			{
@@ -214,7 +235,7 @@
  			{
  				//buscar el estudiante del cual es la asistencia
  				$estudiante = new estudiante ();
- 				$estudiante = $estudiante->load_estudiante_by_asistencia_inverse($asistencia->get_idasistencia());
+ 				$estudiante = $estudiante->load_estudiante_by_asistencia_inverse($asistencia->get_idasistencia())[0];
  				//desvincular la asistencia del estudiante en particular
  				$estudiante->remove_asistencia($asistencia->get_idasistencia());
  				//eliminar el registro de asistencia

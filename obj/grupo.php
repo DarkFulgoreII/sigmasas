@@ -90,6 +90,7 @@
 		
 		function load_grupo_by_estudiante_inverse($idestudiante)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->estudiante_rel_table WHERE $idestudiante = $this->estudiante_relN_field";
 			$this->db->query( $dbQuery );
@@ -98,9 +99,9 @@
 				$elemento = new grupo();
 				$elemento->set_idgrupo ($this->db->f($this->idgrupo_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		

@@ -90,6 +90,7 @@
 		
 		function load_tipoacompanamiento_by_categoria_inverse($idcategoria)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->categoria_rel_table WHERE $idcategoria = $this->categoria_relN_field";
 			$this->db->query( $dbQuery );
@@ -98,9 +99,9 @@
 				$elemento = new tipoacompanamiento();
 				$elemento->set_idtipoacompanamiento ($this->db->f($this->idtipoacompanamiento_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		

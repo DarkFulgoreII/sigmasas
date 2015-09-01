@@ -339,6 +339,7 @@
 		
 		function load_sigmasas_by_acompanamiento_inverse($idacompanamiento)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->acompanamiento_rel_table WHERE $idacompanamiento = $this->acompanamiento_relN_field";
 			$this->db->query( $dbQuery );
@@ -347,14 +348,15 @@
 				$elemento = new sigmasas();
 				$elemento->set_idsigmasas ($this->db->f($this->idsigmasas_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		
 		function load_sigmasas_by_curso_inverse($idcurso)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->curso_rel_table WHERE $idcurso = $this->curso_relN_field";
 			$this->db->query( $dbQuery );
@@ -363,14 +365,15 @@
 				$elemento = new sigmasas();
 				$elemento->set_idsigmasas ($this->db->f($this->idsigmasas_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		
 		function load_sigmasas_by_estudiante_inverse($idestudiante)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->estudiante_rel_table WHERE $idestudiante = $this->estudiante_relN_field";
 			$this->db->query( $dbQuery );
@@ -379,14 +382,15 @@
 				$elemento = new sigmasas();
 				$elemento->set_idsigmasas ($this->db->f($this->idsigmasas_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		
 		function load_sigmasas_by_grupo_inverse($idgrupo)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->grupo_rel_table WHERE $idgrupo = $this->grupo_relN_field";
 			$this->db->query( $dbQuery );
@@ -395,14 +399,15 @@
 				$elemento = new sigmasas();
 				$elemento->set_idsigmasas ($this->db->f($this->idsigmasas_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		
 		function load_sigmasas_by_rol_inverse($idrol)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->rol_rel_table WHERE $idrol = $this->rol_relN_field";
 			$this->db->query( $dbQuery );
@@ -411,14 +416,15 @@
 				$elemento = new sigmasas();
 				$elemento->set_idsigmasas ($this->db->f($this->idsigmasas_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		
 		function load_sigmasas_by_usuario_inverse($idusuario)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->usuario_rel_table WHERE $idusuario = $this->usuario_relN_field";
 			$this->db->query( $dbQuery );
@@ -427,14 +433,15 @@
 				$elemento = new sigmasas();
 				$elemento->set_idsigmasas ($this->db->f($this->idsigmasas_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		
 		function load_sigmasas_by_bloque_inverse($idbloque)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->bloque_rel_table WHERE $idbloque = $this->bloque_relN_field";
 			$this->db->query( $dbQuery );
@@ -443,14 +450,15 @@
 				$elemento = new sigmasas();
 				$elemento->set_idsigmasas ($this->db->f($this->idsigmasas_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		
 		function load_sigmasas_by_semana_inverse($idsemana)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->semana_rel_table WHERE $idsemana = $this->semana_relN_field";
 			$this->db->query( $dbQuery );
@@ -459,14 +467,15 @@
 				$elemento = new sigmasas();
 				$elemento->set_idsigmasas ($this->db->f($this->idsigmasas_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		
 		function load_sigmasas_by_categoria_inverse($idcategoria)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->categoria_rel_table WHERE $idcategoria = $this->categoria_relN_field";
 			$this->db->query( $dbQuery );
@@ -475,14 +484,15 @@
 				$elemento = new sigmasas();
 				$elemento->set_idsigmasas ($this->db->f($this->idsigmasas_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		
 		function load_sigmasas_by_tipoacompanamiento_inverse($idtipoacompanamiento)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->tipoacompanamiento_rel_table WHERE $idtipoacompanamiento = $this->tipoacompanamiento_relN_field";
 			$this->db->query( $dbQuery );
@@ -491,9 +501,9 @@
 				$elemento = new sigmasas();
 				$elemento->set_idsigmasas ($this->db->f($this->idsigmasas_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		

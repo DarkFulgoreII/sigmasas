@@ -123,6 +123,7 @@
 		
 		function load_curso_by_actividad_inverse($idactividad)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->actividad_rel_table WHERE $idactividad = $this->actividad_relN_field";
 			$this->db->query( $dbQuery );
@@ -131,14 +132,15 @@
 				$elemento = new curso();
 				$elemento->set_idcurso ($this->db->f($this->idcurso_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		
 		function load_curso_by_seccion_inverse($idseccion)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->seccion_rel_table WHERE $idseccion = $this->seccion_relN_field";
 			$this->db->query( $dbQuery );
@@ -147,9 +149,9 @@
 				$elemento = new curso();
 				$elemento->set_idcurso ($this->db->f($this->idcurso_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		

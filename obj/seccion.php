@@ -137,6 +137,7 @@
 		
 		function load_seccion_by_estudiante_inverse($idestudiante)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->estudiante_rel_table WHERE $idestudiante = $this->estudiante_relN_field";
 			$this->db->query( $dbQuery );
@@ -145,14 +146,15 @@
 				$elemento = new seccion();
 				$elemento->set_idseccion ($this->db->f($this->idseccion_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		
 		function load_seccion_by_usuario_inverse($idusuario)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->usuario_rel_table WHERE $idusuario = $this->usuario_relN_field";
 			$this->db->query( $dbQuery );
@@ -161,9 +163,9 @@
 				$elemento = new seccion();
 				$elemento->set_idseccion ($this->db->f($this->idseccion_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		

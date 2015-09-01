@@ -99,6 +99,7 @@
 		
 		function load_categoria_by_aspecto_inverse($idaspecto)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->aspecto_rel_table WHERE $idaspecto = $this->aspecto_relN_field";
 			$this->db->query( $dbQuery );
@@ -107,9 +108,9 @@
 				$elemento = new categoria();
 				$elemento->set_idcategoria ($this->db->f($this->idcategoria_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		

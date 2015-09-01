@@ -143,6 +143,7 @@
 		
 		function load_acompanamiento_by_estudiante_inverse($idestudiante)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->estudiante_rel_table WHERE $idestudiante = $this->estudiante_relN_field";
 			$this->db->query( $dbQuery );
@@ -151,14 +152,15 @@
 				$elemento = new acompanamiento();
 				$elemento->set_idacompanamiento ($this->db->f($this->idacompanamiento_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		
 		function load_acompanamiento_by_aspecto_inverse($idaspecto)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->aspecto_rel_table WHERE $idaspecto = $this->aspecto_relN_field";
 			$this->db->query( $dbQuery );
@@ -167,9 +169,9 @@
 				$elemento = new acompanamiento();
 				$elemento->set_idacompanamiento ($this->db->f($this->idacompanamiento_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		

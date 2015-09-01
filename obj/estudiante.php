@@ -270,6 +270,7 @@
 		
 		function load_estudiante_by_asistencia_inverse($idasistencia)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->asistencia_rel_table WHERE $idasistencia = $this->asistencia_relN_field";
 			$this->db->query( $dbQuery );
@@ -278,14 +279,15 @@
 				$elemento = new estudiante();
 				$elemento->set_idestudiante ($this->db->f($this->idestudiante_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		
 		function load_estudiante_by_entrega_inverse($identrega)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->entrega_rel_table WHERE $identrega = $this->entrega_relN_field";
 			$this->db->query( $dbQuery );
@@ -294,9 +296,9 @@
 				$elemento = new estudiante();
 				$elemento->set_idestudiante ($this->db->f($this->idestudiante_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		

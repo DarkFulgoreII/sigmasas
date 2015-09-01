@@ -93,6 +93,7 @@
 		
 		function load_usuario_by_rol_inverse($idrol)
 		{
+			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->rol_rel_table WHERE $idrol = $this->rol_relN_field";
 			$this->db->query( $dbQuery );
@@ -101,9 +102,9 @@
 				$elemento = new usuario();
 				$elemento->set_idusuario ($this->db->f($this->idusuario_field));
 				$elemento->load();
-				return $elemento;
+				$result[] = $elemento;
 			}
-			return false;
+			return $result;
 		}
 		
 		
