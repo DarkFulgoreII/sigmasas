@@ -3,6 +3,8 @@
  	
 	require_once("actividad.php");
 	require_once("seccion.php");
+	require_once("compentencia.php");
+	require_once("rubrica.php");
  	
  	class curso 
  	{
@@ -21,6 +23,8 @@
 		
 		var $actividad_collection = array();
 		var $seccion_collection = array();
+		var $compentencia_collection = array();
+		var $rubrica_collection = array();
 		
 		//elements
 		
@@ -47,6 +51,14 @@
 		//var $seccion_table = "seccion";
 		var $seccion_relN_field = "idseccion";
 		var $seccion_rel_table = "curso_has_seccion";
+		// compentencia : 1-N relation
+		//var $compentencia_table = "compentencia";
+		var $compentencia_relN_field = "idcompentencia";
+		var $compentencia_rel_table = "curso_has_compentencia";
+		// rubrica : 1-N relation
+		//var $rubrica_table = "rubrica";
+		var $rubrica_relN_field = "idrubrica";
+		var $rubrica_rel_table = "curso_has_rubrica";
 		
 		//constructor
 		function curso( $id=0 ) 
@@ -118,6 +130,48 @@
 			return $this->seccion_collection;
 		}
 		
+		function load_compentencia_collection()
+		{
+			$this->compentencia_collection = array();
+			(string) $dbQuery     = "";
+			$dbQuery = "SELECT * FROM $this->compentencia_rel_table WHERE $this->idcurso = $this->idcurso_field";
+			$this->db->query( $dbQuery );
+			while ($this->db->next_record()) 
+			{
+				$elemento = new compentencia();
+				$elemento->set_idcompentencia($this->db->f($this->compentencia_relN_field));
+				$elemento->load();
+				$this->compentencia_collection[] = $elemento;
+			}
+			return true;
+		}
+		function get_compentencia_collection()
+		{
+			$this->load_compentencia_collection();
+			return $this->compentencia_collection;
+		}
+		
+		function load_rubrica_collection()
+		{
+			$this->rubrica_collection = array();
+			(string) $dbQuery     = "";
+			$dbQuery = "SELECT * FROM $this->rubrica_rel_table WHERE $this->idcurso = $this->idcurso_field";
+			$this->db->query( $dbQuery );
+			while ($this->db->next_record()) 
+			{
+				$elemento = new rubrica();
+				$elemento->set_idrubrica($this->db->f($this->rubrica_relN_field));
+				$elemento->load();
+				$this->rubrica_collection[] = $elemento;
+			}
+			return true;
+		}
+		function get_rubrica_collection()
+		{
+			$this->load_rubrica_collection();
+			return $this->rubrica_collection;
+		}
+		
 		//LOAD RELATIONS -N (INVERSE) load one curso using a collection element (parent)
 		
 		
@@ -143,6 +197,40 @@
 			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->seccion_rel_table WHERE $idseccion = $this->seccion_relN_field";
+			$this->db->query( $dbQuery );
+			while ($this->db->next_record()) 
+			{
+				$elemento = new curso();
+				$elemento->set_idcurso ($this->db->f($this->idcurso_field));
+				$elemento->load();
+				$result[] = $elemento;
+			}
+			return $result;
+		}
+		
+		
+		function load_curso_by_compentencia_inverse($idcompentencia)
+		{
+			$result = array();
+			(string) $dbQuery     = "";
+			$dbQuery = "SELECT * FROM $this->compentencia_rel_table WHERE $idcompentencia = $this->compentencia_relN_field";
+			$this->db->query( $dbQuery );
+			while ($this->db->next_record()) 
+			{
+				$elemento = new curso();
+				$elemento->set_idcurso ($this->db->f($this->idcurso_field));
+				$elemento->load();
+				$result[] = $elemento;
+			}
+			return $result;
+		}
+		
+		
+		function load_curso_by_rubrica_inverse($idrubrica)
+		{
+			$result = array();
+			(string) $dbQuery     = "";
+			$dbQuery = "SELECT * FROM $this->rubrica_rel_table WHERE $idrubrica = $this->rubrica_relN_field";
 			$this->db->query( $dbQuery );
 			while ($this->db->next_record()) 
 			{
@@ -268,6 +356,48 @@
 			return true;
 		}
 		
+		function add_compentencia ($idcompentencia)
+		{
+			(string) $dbQuery     = "";
+			
+			$dbQuery = "INSERT INTO $this->compentencia_rel_table ";
+		   	$dbQuery .= "(";
+		   	$dbQuery .= " $this->idcurso_field,";
+		   	$dbQuery .= " $this->compentencia_relN_field";
+		   	$dbQuery .= ")";
+		   	$dbQuery .= " VALUES ";
+		   	$dbQuery .= "(";
+		   	$dbQuery .= " $this->idcurso,";
+		   	$dbQuery .= " $idcompentencia";
+		   	$dbQuery .= ")";
+		   	
+		   	$this->db->query( $dbQuery );
+			
+			if ($this->db->affected_rows() == 0) return false;
+			return true;
+		}
+		
+		function add_rubrica ($idrubrica)
+		{
+			(string) $dbQuery     = "";
+			
+			$dbQuery = "INSERT INTO $this->rubrica_rel_table ";
+		   	$dbQuery .= "(";
+		   	$dbQuery .= " $this->idcurso_field,";
+		   	$dbQuery .= " $this->rubrica_relN_field";
+		   	$dbQuery .= ")";
+		   	$dbQuery .= " VALUES ";
+		   	$dbQuery .= "(";
+		   	$dbQuery .= " $this->idcurso,";
+		   	$dbQuery .= " $idrubrica";
+		   	$dbQuery .= ")";
+		   	
+		   	$this->db->query( $dbQuery );
+			
+			if ($this->db->affected_rows() == 0) return false;
+			return true;
+		}
+		
 		//REMOVE FROM COLLECTION
 		
 		function remove_actividad ($idactividad)
@@ -293,6 +423,36 @@
 			$dbQuery.= " WHERE $this->idcurso_field = $this->idcurso ";
 			$dbQuery.= " AND ";
 			$dbQuery.= " $this->seccion_relN_field = $idseccion ";
+			
+			$this->db->query( $dbQuery );
+			
+			if ($this->db->affected_rows() == 0) return false;               
+			return true;
+		}  		
+		
+		function remove_compentencia ($idcompentencia)
+		{
+			(string) $dbQuery     = "";
+			
+			$dbQuery = "DELETE FROM $this->compentencia_rel_table ";
+			$dbQuery.= " WHERE $this->idcurso_field = $this->idcurso ";
+			$dbQuery.= " AND ";
+			$dbQuery.= " $this->compentencia_relN_field = $idcompentencia ";
+			
+			$this->db->query( $dbQuery );
+			
+			if ($this->db->affected_rows() == 0) return false;               
+			return true;
+		}  		
+		
+		function remove_rubrica ($idrubrica)
+		{
+			(string) $dbQuery     = "";
+			
+			$dbQuery = "DELETE FROM $this->rubrica_rel_table ";
+			$dbQuery.= " WHERE $this->idcurso_field = $this->idcurso ";
+			$dbQuery.= " AND ";
+			$dbQuery.= " $this->rubrica_relN_field = $idrubrica ";
 			
 			$this->db->query( $dbQuery );
 			

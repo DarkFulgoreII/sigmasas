@@ -3,6 +3,7 @@
  	
 	require_once("asistencia.php");
 	require_once("entrega.php");
+	require_once("evaluacion.php");
  	
  	class estudiante 
  	{
@@ -70,6 +71,7 @@
 		
 		var $asistencia_collection = array();
 		var $entrega_collection = array();
+		var $evaluacion_collection = array();
 		
 		//elements
 		
@@ -145,6 +147,10 @@
 		//var $entrega_table = "entrega";
 		var $entrega_relN_field = "identrega";
 		var $entrega_rel_table = "estudiante_has_entrega";
+		// evaluacion : 1-N relation
+		//var $evaluacion_table = "evaluacion";
+		var $evaluacion_relN_field = "idevaluacion";
+		var $evaluacion_rel_table = "estudiante_has_evaluacion";
 		
 		//constructor
 		function estudiante( $id=0 ) 
@@ -265,6 +271,27 @@
 			return $this->entrega_collection;
 		}
 		
+		function load_evaluacion_collection()
+		{
+			$this->evaluacion_collection = array();
+			(string) $dbQuery     = "";
+			$dbQuery = "SELECT * FROM $this->evaluacion_rel_table WHERE $this->idestudiante = $this->idestudiante_field";
+			$this->db->query( $dbQuery );
+			while ($this->db->next_record()) 
+			{
+				$elemento = new evaluacion();
+				$elemento->set_idevaluacion($this->db->f($this->evaluacion_relN_field));
+				$elemento->load();
+				$this->evaluacion_collection[] = $elemento;
+			}
+			return true;
+		}
+		function get_evaluacion_collection()
+		{
+			$this->load_evaluacion_collection();
+			return $this->evaluacion_collection;
+		}
+		
 		//LOAD RELATIONS -N (INVERSE) load one estudiante using a collection element (parent)
 		
 		
@@ -290,6 +317,23 @@
 			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->entrega_rel_table WHERE $identrega = $this->entrega_relN_field";
+			$this->db->query( $dbQuery );
+			while ($this->db->next_record()) 
+			{
+				$elemento = new estudiante();
+				$elemento->set_idestudiante ($this->db->f($this->idestudiante_field));
+				$elemento->load();
+				$result[] = $elemento;
+			}
+			return $result;
+		}
+		
+		
+		function load_estudiante_by_evaluacion_inverse($idevaluacion)
+		{
+			$result = array();
+			(string) $dbQuery     = "";
+			$dbQuery = "SELECT * FROM $this->evaluacion_rel_table WHERE $idevaluacion = $this->evaluacion_relN_field";
 			$this->db->query( $dbQuery );
 			while ($this->db->next_record()) 
 			{
@@ -563,6 +607,27 @@
 			return true;
 		}
 		
+		function add_evaluacion ($idevaluacion)
+		{
+			(string) $dbQuery     = "";
+			
+			$dbQuery = "INSERT INTO $this->evaluacion_rel_table ";
+		   	$dbQuery .= "(";
+		   	$dbQuery .= " $this->idestudiante_field,";
+		   	$dbQuery .= " $this->evaluacion_relN_field";
+		   	$dbQuery .= ")";
+		   	$dbQuery .= " VALUES ";
+		   	$dbQuery .= "(";
+		   	$dbQuery .= " $this->idestudiante,";
+		   	$dbQuery .= " $idevaluacion";
+		   	$dbQuery .= ")";
+		   	
+		   	$this->db->query( $dbQuery );
+			
+			if ($this->db->affected_rows() == 0) return false;
+			return true;
+		}
+		
 		//REMOVE FROM COLLECTION
 		
 		function remove_asistencia ($idasistencia)
@@ -588,6 +653,21 @@
 			$dbQuery.= " WHERE $this->idestudiante_field = $this->idestudiante ";
 			$dbQuery.= " AND ";
 			$dbQuery.= " $this->entrega_relN_field = $identrega ";
+			
+			$this->db->query( $dbQuery );
+			
+			if ($this->db->affected_rows() == 0) return false;               
+			return true;
+		}  		
+		
+		function remove_evaluacion ($idevaluacion)
+		{
+			(string) $dbQuery     = "";
+			
+			$dbQuery = "DELETE FROM $this->evaluacion_rel_table ";
+			$dbQuery.= " WHERE $this->idestudiante_field = $this->idestudiante ";
+			$dbQuery.= " AND ";
+			$dbQuery.= " $this->evaluacion_relN_field = $idevaluacion ";
 			
 			$this->db->query( $dbQuery );
 			
