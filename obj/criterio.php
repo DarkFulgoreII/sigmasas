@@ -1,7 +1,7 @@
  
  <?php
  	
-	require_once("compentencia.php");
+	require_once("competencia.php");
  	
  	class criterio 
  	{
@@ -17,7 +17,7 @@
 		
 		//collections
 		
-		var $compentencia_collection = array();
+		var $competencia_collection = array();
 		
 		//elements
 		
@@ -35,10 +35,10 @@
 		
 		//relation table names
 		
-		// compentencia : 1-N relation
-		//var $compentencia_table = "compentencia";
-		var $compentencia_relN_field = "idcompentencia";
-		var $compentencia_rel_table = "criterio_has_compentencia";
+		// competencia : 1-N relation
+		//var $competencia_table = "competencia";
+		var $competencia_relN_field = "idcompetencia";
+		var $competencia_rel_table = "criterio_has_competencia";
 		
 		//constructor
 		function criterio( $id=0 ) 
@@ -67,35 +67,35 @@
 		}
 		//LOAD RELATIONS -N
 		
-		function load_compentencia_collection()
+		function load_competencia_collection()
 		{
-			$this->compentencia_collection = array();
+			$this->competencia_collection = array();
 			(string) $dbQuery     = "";
-			$dbQuery = "SELECT * FROM $this->compentencia_rel_table WHERE $this->idcriterio = $this->idcriterio_field";
+			$dbQuery = "SELECT * FROM $this->competencia_rel_table WHERE $this->idcriterio = $this->idcriterio_field";
 			$this->db->query( $dbQuery );
 			while ($this->db->next_record()) 
 			{
-				$elemento = new compentencia();
-				$elemento->set_idcompentencia($this->db->f($this->compentencia_relN_field));
+				$elemento = new competencia();
+				$elemento->set_idcompetencia($this->db->f($this->competencia_relN_field));
 				$elemento->load();
-				$this->compentencia_collection[] = $elemento;
+				$this->competencia_collection[] = $elemento;
 			}
 			return true;
 		}
-		function get_compentencia_collection()
+		function get_competencia_collection()
 		{
-			$this->load_compentencia_collection();
-			return $this->compentencia_collection;
+			$this->load_competencia_collection();
+			return $this->competencia_collection;
 		}
 		
 		//LOAD RELATIONS -N (INVERSE) load one criterio using a collection element (parent)
 		
 		
-		function load_criterio_by_compentencia_inverse($idcompentencia)
+		function load_criterio_by_competencia_inverse($idcompetencia)
 		{
 			$result = array();
 			(string) $dbQuery     = "";
-			$dbQuery = "SELECT * FROM $this->compentencia_rel_table WHERE $idcompentencia = $this->compentencia_relN_field";
+			$dbQuery = "SELECT * FROM $this->competencia_rel_table WHERE $idcompetencia = $this->competencia_relN_field";
 			$this->db->query( $dbQuery );
 			while ($this->db->next_record()) 
 			{
@@ -176,19 +176,19 @@
 		}
 		//ADD TO COLLECTION
 		
-		function add_compentencia ($idcompentencia)
+		function add_competencia ($idcompetencia)
 		{
 			(string) $dbQuery     = "";
 			
-			$dbQuery = "INSERT INTO $this->compentencia_rel_table ";
+			$dbQuery = "INSERT INTO $this->competencia_rel_table ";
 		   	$dbQuery .= "(";
 		   	$dbQuery .= " $this->idcriterio_field,";
-		   	$dbQuery .= " $this->compentencia_relN_field";
+		   	$dbQuery .= " $this->competencia_relN_field";
 		   	$dbQuery .= ")";
 		   	$dbQuery .= " VALUES ";
 		   	$dbQuery .= "(";
 		   	$dbQuery .= " $this->idcriterio,";
-		   	$dbQuery .= " $idcompentencia";
+		   	$dbQuery .= " $idcompetencia";
 		   	$dbQuery .= ")";
 		   	
 		   	$this->db->query( $dbQuery );
@@ -199,14 +199,14 @@
 		
 		//REMOVE FROM COLLECTION
 		
-		function remove_compentencia ($idcompentencia)
+		function remove_competencia ($idcompetencia)
 		{
 			(string) $dbQuery     = "";
 			
-			$dbQuery = "DELETE FROM $this->compentencia_rel_table ";
+			$dbQuery = "DELETE FROM $this->competencia_rel_table ";
 			$dbQuery.= " WHERE $this->idcriterio_field = $this->idcriterio ";
 			$dbQuery.= " AND ";
-			$dbQuery.= " $this->compentencia_relN_field = $idcompentencia ";
+			$dbQuery.= " $this->competencia_relN_field = $idcompetencia ";
 			
 			$this->db->query( $dbQuery );
 			

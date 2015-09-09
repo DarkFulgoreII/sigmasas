@@ -7,6 +7,12 @@
  		{
  			$this->contenedor = $cont;
  		}
+ 		function darRubricasPorCurso($idcurso)
+ 		{
+ 			$curso = new curso($idcurso); $curso->load();
+ 			return $curso->get_rubrica_collection();
+ 		}
+
  		function darAcompanamientosPorEstudiante($idestudiante )
  		{
  			$resultado = array();

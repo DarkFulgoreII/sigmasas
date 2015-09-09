@@ -3,7 +3,7 @@
  	
 	require_once("actividad.php");
 	require_once("seccion.php");
-	require_once("compentencia.php");
+	require_once("competencia.php");
 	require_once("rubrica.php");
  	
  	class curso 
@@ -23,7 +23,7 @@
 		
 		var $actividad_collection = array();
 		var $seccion_collection = array();
-		var $compentencia_collection = array();
+		var $competencia_collection = array();
 		var $rubrica_collection = array();
 		
 		//elements
@@ -51,10 +51,10 @@
 		//var $seccion_table = "seccion";
 		var $seccion_relN_field = "idseccion";
 		var $seccion_rel_table = "curso_has_seccion";
-		// compentencia : 1-N relation
-		//var $compentencia_table = "compentencia";
-		var $compentencia_relN_field = "idcompentencia";
-		var $compentencia_rel_table = "curso_has_compentencia";
+		// competencia : 1-N relation
+		//var $competencia_table = "competencia";
+		var $competencia_relN_field = "idcompetencia";
+		var $competencia_rel_table = "curso_has_competencia";
 		// rubrica : 1-N relation
 		//var $rubrica_table = "rubrica";
 		var $rubrica_relN_field = "idrubrica";
@@ -130,25 +130,25 @@
 			return $this->seccion_collection;
 		}
 		
-		function load_compentencia_collection()
+		function load_competencia_collection()
 		{
-			$this->compentencia_collection = array();
+			$this->competencia_collection = array();
 			(string) $dbQuery     = "";
-			$dbQuery = "SELECT * FROM $this->compentencia_rel_table WHERE $this->idcurso = $this->idcurso_field";
+			$dbQuery = "SELECT * FROM $this->competencia_rel_table WHERE $this->idcurso = $this->idcurso_field";
 			$this->db->query( $dbQuery );
 			while ($this->db->next_record()) 
 			{
-				$elemento = new compentencia();
-				$elemento->set_idcompentencia($this->db->f($this->compentencia_relN_field));
+				$elemento = new competencia();
+				$elemento->set_idcompetencia($this->db->f($this->competencia_relN_field));
 				$elemento->load();
-				$this->compentencia_collection[] = $elemento;
+				$this->competencia_collection[] = $elemento;
 			}
 			return true;
 		}
-		function get_compentencia_collection()
+		function get_competencia_collection()
 		{
-			$this->load_compentencia_collection();
-			return $this->compentencia_collection;
+			$this->load_competencia_collection();
+			return $this->competencia_collection;
 		}
 		
 		function load_rubrica_collection()
@@ -209,11 +209,11 @@
 		}
 		
 		
-		function load_curso_by_compentencia_inverse($idcompentencia)
+		function load_curso_by_competencia_inverse($idcompetencia)
 		{
 			$result = array();
 			(string) $dbQuery     = "";
-			$dbQuery = "SELECT * FROM $this->compentencia_rel_table WHERE $idcompentencia = $this->compentencia_relN_field";
+			$dbQuery = "SELECT * FROM $this->competencia_rel_table WHERE $idcompetencia = $this->competencia_relN_field";
 			$this->db->query( $dbQuery );
 			while ($this->db->next_record()) 
 			{
@@ -356,19 +356,19 @@
 			return true;
 		}
 		
-		function add_compentencia ($idcompentencia)
+		function add_competencia ($idcompetencia)
 		{
 			(string) $dbQuery     = "";
 			
-			$dbQuery = "INSERT INTO $this->compentencia_rel_table ";
+			$dbQuery = "INSERT INTO $this->competencia_rel_table ";
 		   	$dbQuery .= "(";
 		   	$dbQuery .= " $this->idcurso_field,";
-		   	$dbQuery .= " $this->compentencia_relN_field";
+		   	$dbQuery .= " $this->competencia_relN_field";
 		   	$dbQuery .= ")";
 		   	$dbQuery .= " VALUES ";
 		   	$dbQuery .= "(";
 		   	$dbQuery .= " $this->idcurso,";
-		   	$dbQuery .= " $idcompentencia";
+		   	$dbQuery .= " $idcompetencia";
 		   	$dbQuery .= ")";
 		   	
 		   	$this->db->query( $dbQuery );
@@ -430,14 +430,14 @@
 			return true;
 		}  		
 		
-		function remove_compentencia ($idcompentencia)
+		function remove_competencia ($idcompetencia)
 		{
 			(string) $dbQuery     = "";
 			
-			$dbQuery = "DELETE FROM $this->compentencia_rel_table ";
+			$dbQuery = "DELETE FROM $this->competencia_rel_table ";
 			$dbQuery.= " WHERE $this->idcurso_field = $this->idcurso ";
 			$dbQuery.= " AND ";
-			$dbQuery.= " $this->compentencia_relN_field = $idcompentencia ";
+			$dbQuery.= " $this->competencia_relN_field = $idcompetencia ";
 			
 			$this->db->query( $dbQuery );
 			

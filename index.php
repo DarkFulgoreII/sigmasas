@@ -91,10 +91,13 @@
 									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Registrar la realización de <strong>actividades</strong> por parte de los estudiantes.</li>
 									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Registrar las <strong>calificaciones</strong> de actividades realizadas por los estudiantes.</li>
 									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Registrar eventos de <strong>acompañamiento</strong> y citaciones a estudiantes.</li>
+									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Registrar resultados de <strong>pruebas</strong> realizadas a estudiantes.</li>
 									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Consultar reportes consolidados de <strong>asistencia</strong>.</li>
 									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Consultar reportes consolidados de <strong>entregas</strong>.</li>
 									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Calcular <strong>notas</strong> definitivas de estudiantes.</li>
 									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Consultar reportes consolidados de registros de <strong>acompañamiento</strong>.</li>
+									<li class="list-group-item"><span class="glyphicon glyphicon-ok"></span>  Consultar reportes consolidados de registros de <strong>actividad en aulas virtuales</strong>.</li>
+
 								</ul>
 							</div>
 						</div>

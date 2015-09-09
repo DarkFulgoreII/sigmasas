@@ -35,6 +35,20 @@
 			$resultado .='</select>';
 			$serviceresult = $resultado;
 		}
+		else if ($_REQUEST['service']=='darPruebasPorCurso' )
+		{
+			$idcurso = $_REQUEST['idcurso'];
+			
+			$rubricas = $helper->darRubricasPorCurso($idcurso );
+
+			$resultado = '<select class="form-control" name = "combo_rubricas" id="combo_rubricas">';
+			foreach ($rubricas as $rub) 
+			{
+				$resultado .='<option value="'.$rub->get_idrubrica().'">'.utf8_encode($rub->get_nombre()).'</option>';
+			}
+			$resultado .='</select>';
+			$serviceresult = $resultado;
+		}
 		
 		eecho($serviceresult);	
 	}
