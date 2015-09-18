@@ -222,76 +222,131 @@
 				<div class="well" >
 					
 					<h4>Calificar prueba de estudiante</h4>
-					<table class="table table-bordered" >
-						<tr>
-							<th>
-								Curso: 
-							</th>
-							<th>
-								Grupo: 
-							</th>
-							<th>
-								Prueba: 
-							</th>
-							<th>
-								Estudiante: 
-							</th>
-						</tr>
-						<tr>
-							<td>
-								<?eecho($curso->get_nombre());?>
-							</td>
-							<td>
-								<?eecho($grupo->get_nombre());?>
-							</td>
-							<td>
-								<?eecho($rubrica->get_nombre());?>
-							</td>
-							<td>
-								<? eecho($estudiante->get_apellido1());  ?> <? eecho($estudiante->get_apellido2()); ?> <?= $estudiante->get_nombres() ?> <?if($estudiante->get_desactivado()==1):?>(Retirado)<?endif;?>
-							</td>
-						</tr>
-						
-						<tr>
-							<td colspan= "3">
-								<table class="table table-hover">	
-									<tr>
-										<th colspan = "2"><h5><strong>Criterio</strong></h5></th>
-										<th><h5><strong>Competencias</strong></h5></th>
-										<th><h5><strong>Niveles</strong></h5></th>
-										<th><h5><strong>Calificacion</strong></h5></th>
-										<th><h5><strong>Comentario</strong></h5></th>
-									</tr>
-									<? foreach($rubrica->get_criterio_collection() as $criterio ): ?>
+					<form id = "frm_calificarrubrica" method = "POST" accept-charset="UTF-8" action="<?=$_SERVER['PHP_SELF']?>">
+						<input type = "hidden" name= "action" id= "action" value = "calificarrubrica" />
+						<input type = "hidden" name= "idestudiante" id= "idestudiante" value = "<?=$estudiante->get_idestudiante()?>" />
+						<input type = "hidden" name= "idrubrica" id= "idrubrica" value = "<?=$rubrica->get_idrubrica()?>" />
+						<input type = "hidden" name= "idcurso" id= "idcurso" value = "<?=$curso->get_idcurso()?>" />
+						<input type = "hidden" name= "idgrupo" id= "idgrupo" value = "<?=$grupo->get_idgrupo()?>" />
+						<table class="table table-bordered" >
+							<tr>
+								<th>
+									Curso: 
+								</th>
+								<th>
+									Grupo: 
+								</th>
+								<th>
+									Prueba: 
+								</th>
+								<th>
+									Estudiante: 
+								</th>
+							</tr>
+							<tr>
+								<td>
+									<?eecho($curso->get_nombre());?>
+								</td>
+								<td>
+									<?eecho($grupo->get_nombre());?>
+								</td>
+								<td>
+									<?eecho($rubrica->get_nombre());?>
+								</td>
+								<td>
+									<? eecho($estudiante->get_apellido1());  ?> <? eecho($estudiante->get_apellido2()); ?> <?= $estudiante->get_nombres() ?> <?if($estudiante->get_desactivado()==1):?>(Retirado)<?endif;?>
+								</td>
+							</tr>
+							
+							<tr>
+								<td colspan= "4">
+									
+									<table class="table">	
 										<tr>
-											<td><small><? eecho($criterio->get_nombre());?></small></td>
-											<td><small><? eecho($criterio->get_descripcion());?></small></td>
-											<td><small>
-												<? foreach($criterio->get_competencia_collection() as $competencia ): ?>
-													$strcompetencias .= $competencia->get_nombre().",";	
-												<? endforeach;?>
-												<?
-													$strcompetencias = preg_replace('/,$/', ' ', $strcompetencias);
-													eecho($strcompetencias);
-												?>
-
-											</small></td>
-											<td></td>
-											<td></td>
+											<th colspan = "2"><h5><strong>Criterio</strong></h5></th>
+											<th><h5><strong>Competencias</strong></h5></th>
+											<th><h5><strong>Niveles</strong></h5></th>
+											<th><h5><strong>Calificación</strong></h5></th>
+											<th><h5><strong>Comentario</strong></h5></th>
 										</tr>
-									<? endforeach;?>
-								</table>
-							</td>
-						</tr>
-						
-					</table>
-				
-					<center>
-						<a 
-							href="./verAcompanamiento.php" 
-							class="btn btn-default btn-sm"
-						>Volver</a>
-					</center>
+										<? foreach($rubrica->get_criterio_collection() as $criterio ): ?>
+											<tr>
+												<td><small><? eecho($criterio->get_nombre());?></small></td>
+												<td><small><? eecho($criterio->get_descripcion());?></small></td>
+												<td><small>
+													<?
+														$strcompetencias="";
+													?>
+													<? 
+														foreach($criterio->get_competencia_collection() as $competencia ): 
+															$strcompetencias .= $competencia->get_nombre().",";	
+														endforeach;
+													?>
+													<?
+														$strcompetencias = preg_replace('/,$/', ' ', $strcompetencias);
+														eecho($strcompetencias);
+													?>
+												</small></td>
+												<td>
+													<table class="table table-bordered">
+														<tr>
+															<? foreach($criterio->get_escala_collection() as $escala ): ?>
+																<td>
+																	<input 
+																		type="radio" 
+																		name="radiocalificacion_<?=$criterio->get_idcriterio()?>" 
+																		id="radiocalificacion__<?=$criterio->get_idcriterio()?>"
+																		onClick="document.getElementById('textcalificacion[<?=$criterio->get_idcriterio()?>]').value = <?=$escala->get_puntajeEscala()?>" 
+																	>
+																		<?
+																			$puntajeescala = $escala->get_puntajeEscala()." punto";
+																			if($escala->get_puntajeEscala()!=1) $puntajeescala.="s";
+																		?>
+																		<? eecho($escala->get_descripcion()); ?> <br>(<? eecho($puntajeescala); ?>) 
+																	</input>
+																</td>
+															<? endforeach; ?>
+														</tr>
+													</table>
+												</td>
+												<td>
+													<input 
+														type="text" 
+														value ="0.0"
+														name="textcalificacion[<?=$criterio->get_idcriterio()?>]" 
+														id="textcalificacion[<?=$criterio->get_idcriterio()?>]" 
+													/>
+												</td>
+												<td>
+													<small>
+														<textarea 
+															style="font-size: 10px;" 
+															rows="4" 
+															cols="50" 
+															name="text_observaciones[<?= $criterio->get_idcriterio() ?>]" 
+															id="text_observaciones[<?= $criterio->get_idcriterio() ?>]" 
+														><? eecho(""); ?></textarea>
+													</small>
+												</td>
+											</tr>
+										<? endforeach;?>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<center>
+							<input 
+								class="btn btn-default btn-sm" 
+								id = "submit_calificarrubrica" 
+								type = "submit" 
+								value="Guardar calificación" 
+							/>
+							<a 
+								href="./registrarPrueba.php" 
+								class="btn btn-default btn-sm"
+							>Volver</a>
+						</center>
+					</form>
 				</div>	
 			<? }?> 
 		<?

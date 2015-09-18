@@ -2,6 +2,7 @@
  <?php
  	
 	require_once("puntaje.php");
+	require_once("rubrica.php");
  	
  	class evaluacion 
  	{
@@ -20,6 +21,7 @@
 		
 		//elements
 		
+		var $rubrica_element ;
 		
 		//table name
 		var $evaluacion_table="evaluacion";
@@ -37,6 +39,10 @@
 		//var $puntaje_table = "puntaje";
 		var $puntaje_relN_field = "idpuntaje";
 		var $puntaje_rel_table = "evaluacion_has_puntaje";
+		// rubrica : 1-1 relation
+		//var $rubrica_table = "rubrica";
+		var $rubrica_rel1_field = "idrubrica";
+		
 		
 		//constructor
 		function evaluacion( $id=0 ) 
@@ -58,6 +64,7 @@
 				$this->evaluacion = $this->db->f($this->evaluacion_field);
 				//elements
 				
+				$this->rubrica_element = $this->db->f($this->rubrica_rel1_field);
 				return true;
 			}
 			return false;
@@ -109,6 +116,14 @@
 		
 		//LOAD RELATIONS - 1
 		
+		function get_rubrica_element()
+		{
+			$element = new rubrica();
+			$element ->set_idrubrica( $this->rubrica_element );
+			$element->load();
+			return $element;
+		}
+		
 		//INSERT
 		function insert ()
 		{
@@ -119,12 +134,14 @@
 		   	
 			$dbQuery .= $this->evaluacion_field.",";
 			
+			$dbQuery .= "$this->rubrica_rel1_field,";
 			$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
 			$dbQuery .= ") ";
 			$dbQuery .= " VALUES (";
 		   	
 			$dbQuery .= "  $this->evaluacion ,";
 			
+			$dbQuery .= "$this->rubrica_element,";
 		   	
 		   	$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
 		   	$dbQuery .= ") ";
@@ -158,6 +175,7 @@
 			
 			$dbQuery .= "$this->evaluacion_field =  $this->evaluacion ,";
 			
+			$dbQuery .= "$this->rubrica_rel1_field = $this->rubrica_element,";
 		   	
 		   	$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
 			
@@ -231,6 +249,12 @@
 		}
 		
 		//elements
+		
+		function set_rubrica_element($object)
+		{	
+			//update the foreign id based on the object
+			$this->rubrica_element = $object->get_idrubrica();
+		}
 		
  	}
  ?>

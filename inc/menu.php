@@ -23,12 +23,7 @@
       </ul>
     </li>
     <?if(isset($_SESSION["userName"] ) && $_SESSION["userName"] != "carlos_tejada"):?>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pruebas <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="<?=SITE?>web/registrarPrueba.php" >Registro de pruebas a estudiantes</a></li>
-        </ul>
-      </li>
+      <!-- Espacio para el menú de pruebas -->
     <?endif;?>
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reportes <span class="caret"></span></a>
@@ -46,17 +41,20 @@
         <?endif;?>
       </ul>
     </li>
-    <?if(isset($_SESSION["role"] ) && $_SESSION["role"] == "ADMIN"):?>
+    <?if(isset($_SESSION["userName"] ) && $_SESSION["userName"] != "carlos_tejada"):?>
     <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Indicadores de evaluación <span class="caret"></span></a>
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Evaluación<span class="caret"></span></a>
       <ul class="dropdown-menu">
-          <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/evaluacion/reporteIndicadoresEvaluacionEspanol.rptdesign" >Reporte de indicadores de Español</a></li>
-          <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/evaluacion/reporteIndicadoresEvaluacionPrecalculo.rptdesign" >Reporte de indicadores de Precálculo</a></li>
-          <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/evaluacion/reporteIndicadoresEvaluacionVidaUniversitaria.rptdesign" >Reporte de indicadores de Vida Universitaria</a></li>
+          <?if(isset($_SESSION["role"] ) && $_SESSION["role"] == "ADMIN"):?>
+            <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/evaluacion/reporteIndicadoresEvaluacionEspanol.rptdesign" >Reporte de indicadores de Español</a></li>
+            <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/evaluacion/reporteIndicadoresEvaluacionPrecalculo.rptdesign" >Reporte de indicadores de Precálculo</a></li>
+            <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/evaluacion/reporteIndicadoresEvaluacionVidaUniversitaria.rptdesign" >Reporte de indicadores de Vida Universitaria</a></li>
+          <?endif;?>
           <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/evaluacion/indicadoresPorNivelES.rptdesign" >Reporte de indicadores por nivel Español</a></li>
           <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/evaluacion/indicadoresPorNivelPC.rptdesign" >Reporte de indicadores por nivel Precálculo</a></li>
           <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/evaluacion/indicadoresPorNivelVU.rptdesign" >Reporte de indicadores por nivel Vida Universitaria</a></li>
           <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/entregas/reporteEntregasPorIntervalos.rptdesign" >Reporte de calificaciones por intervalos</a></li>
+          <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/pruebas/reporteCompetenciasPorIntervalos.rptdesign" >Reporte de competencias por intervalos</a></li>
       </ul>
     </li>
     <?endif;?>

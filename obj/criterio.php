@@ -2,6 +2,7 @@
  <?php
  	
 	require_once("competencia.php");
+	require_once("escala.php");
  	
  	class criterio 
  	{
@@ -14,10 +15,12 @@
 		
 		var $nombre; // (varchar)
 		var $descripcion; // (varchar)
+		var $puntajeMaximo; // (float)
 		
 		//collections
 		
 		var $competencia_collection = array();
+		var $escala_collection = array();
 		
 		//elements
 		
@@ -32,6 +35,7 @@
 		
 		var $nombre_field="nombre";
 		var $descripcion_field="descripcion";
+		var $puntajeMaximo_field="puntajeMaximo";
 		
 		//relation table names
 		
@@ -39,6 +43,10 @@
 		//var $competencia_table = "competencia";
 		var $competencia_relN_field = "idcompetencia";
 		var $competencia_rel_table = "criterio_has_competencia";
+		// escala : 1-N relation
+		//var $escala_table = "escala";
+		var $escala_relN_field = "idescala";
+		var $escala_rel_table = "criterio_has_escala";
 		
 		//constructor
 		function criterio( $id=0 ) 
@@ -59,6 +67,7 @@
 				
 				$this->nombre = $this->db->f($this->nombre_field);
 				$this->descripcion = $this->db->f($this->descripcion_field);
+				$this->puntajeMaximo = $this->db->f($this->puntajeMaximo_field);
 				//elements
 				
 				return true;
@@ -88,6 +97,27 @@
 			return $this->competencia_collection;
 		}
 		
+		function load_escala_collection()
+		{
+			$this->escala_collection = array();
+			(string) $dbQuery     = "";
+			$dbQuery = "SELECT * FROM $this->escala_rel_table WHERE $this->idcriterio = $this->idcriterio_field";
+			$this->db->query( $dbQuery );
+			while ($this->db->next_record()) 
+			{
+				$elemento = new escala();
+				$elemento->set_idescala($this->db->f($this->escala_relN_field));
+				$elemento->load();
+				$this->escala_collection[] = $elemento;
+			}
+			return true;
+		}
+		function get_escala_collection()
+		{
+			$this->load_escala_collection();
+			return $this->escala_collection;
+		}
+		
 		//LOAD RELATIONS -N (INVERSE) load one criterio using a collection element (parent)
 		
 		
@@ -96,6 +126,23 @@
 			$result = array();
 			(string) $dbQuery     = "";
 			$dbQuery = "SELECT * FROM $this->competencia_rel_table WHERE $idcompetencia = $this->competencia_relN_field";
+			$this->db->query( $dbQuery );
+			while ($this->db->next_record()) 
+			{
+				$elemento = new criterio();
+				$elemento->set_idcriterio ($this->db->f($this->idcriterio_field));
+				$elemento->load();
+				$result[] = $elemento;
+			}
+			return $result;
+		}
+		
+		
+		function load_criterio_by_escala_inverse($idescala)
+		{
+			$result = array();
+			(string) $dbQuery     = "";
+			$dbQuery = "SELECT * FROM $this->escala_rel_table WHERE $idescala = $this->escala_relN_field";
 			$this->db->query( $dbQuery );
 			while ($this->db->next_record()) 
 			{
@@ -122,6 +169,7 @@
 		   	
 			$dbQuery .= $this->nombre_field.",";
 			$dbQuery .= $this->descripcion_field.",";
+			$dbQuery .= $this->puntajeMaximo_field.",";
 			
 			$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
 			$dbQuery .= ") ";
@@ -129,6 +177,7 @@
 		   	
 			$dbQuery .= " '$this->nombre',";
 			$dbQuery .= " '$this->descripcion',";
+			$dbQuery .= "  $this->puntajeMaximo ,";
 			
 		   	
 		   	$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
@@ -163,6 +212,7 @@
 			
 			$dbQuery .= "$this->nombre_field = '$this->nombre',";
 			$dbQuery .= "$this->descripcion_field = '$this->descripcion',";
+			$dbQuery .= "$this->puntajeMaximo_field =  $this->puntajeMaximo ,";
 			
 		   	
 		   	$dbQuery = preg_replace('/,$/', ' ', $dbQuery);
@@ -197,6 +247,27 @@
 			return true;
 		}
 		
+		function add_escala ($idescala)
+		{
+			(string) $dbQuery     = "";
+			
+			$dbQuery = "INSERT INTO $this->escala_rel_table ";
+		   	$dbQuery .= "(";
+		   	$dbQuery .= " $this->idcriterio_field,";
+		   	$dbQuery .= " $this->escala_relN_field";
+		   	$dbQuery .= ")";
+		   	$dbQuery .= " VALUES ";
+		   	$dbQuery .= "(";
+		   	$dbQuery .= " $this->idcriterio,";
+		   	$dbQuery .= " $idescala";
+		   	$dbQuery .= ")";
+		   	
+		   	$this->db->query( $dbQuery );
+			
+			if ($this->db->affected_rows() == 0) return false;
+			return true;
+		}
+		
 		//REMOVE FROM COLLECTION
 		
 		function remove_competencia ($idcompetencia)
@@ -207,6 +278,21 @@
 			$dbQuery.= " WHERE $this->idcriterio_field = $this->idcriterio ";
 			$dbQuery.= " AND ";
 			$dbQuery.= " $this->competencia_relN_field = $idcompetencia ";
+			
+			$this->db->query( $dbQuery );
+			
+			if ($this->db->affected_rows() == 0) return false;               
+			return true;
+		}  		
+		
+		function remove_escala ($idescala)
+		{
+			(string) $dbQuery     = "";
+			
+			$dbQuery = "DELETE FROM $this->escala_rel_table ";
+			$dbQuery.= " WHERE $this->idcriterio_field = $this->idcriterio ";
+			$dbQuery.= " AND ";
+			$dbQuery.= " $this->escala_relN_field = $idescala ";
 			
 			$this->db->query( $dbQuery );
 			
@@ -243,6 +329,15 @@
 		function set_descripcion($value)
 		{
 			$this->descripcion = $value;
+		}
+		
+		function get_puntajeMaximo()
+		{
+			return $this->puntajeMaximo;
+		}
+		function set_puntajeMaximo($value)
+		{
+			$this->puntajeMaximo = $value;
 		}
 		
 		//elements
