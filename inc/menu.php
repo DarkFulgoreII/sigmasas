@@ -1,19 +1,22 @@
 <div class="container">
   <ul class="nav nav-tabs">
     <li class="active"><a href="<?=SITE?>index.php">Inicio</a></li>
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Asistencia <span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li><a href="<?=SITE?>web/registrarAsistencia.php" >Registro de asistencia</a></li>
-        <li><a href="<?=SITE?>web/reporteAsistenciaGrupo.php" >Ver registros de asistencia</a></li>                   
-      </ul>
-    </li>
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Entregas <span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li><a href="<?=SITE?>web/registrarEntrega.php" >Registro de actividades</a></li>                        
-      </ul>
-    </li>
+    <?if(isset($_SESSION["role"] ) && $_SESSION["role"] == "ADMIN"):?>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Asistencia <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="<?=SITE?>web/registrarAsistencia.php" >Registro de asistencia</a></li>
+          <li><a href="<?=SITE?>web/reporteAsistenciaGrupo.php" >Ver registros de asistencia</a></li>                   
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Entregas <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="<?=SITE?>web/registrarEntrega.php" >Registro de actividades</a></li>                        
+        </ul>
+      </li>
+    <?endif;?>
+    
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Acompañamiento <span class="caret"></span></a>
       <ul class="dropdown-menu">
@@ -22,6 +25,7 @@
         <li><a href="<?=SITE?>web/verAcompanamiento.php" >Ver o modificar registros de acompañamiento</a></li>
       </ul>
     </li>
+
     <?if(isset($_SESSION["userName"] ) && $_SESSION["userName"] != "carlos_tejada"):?>
       <!-- Espacio para el menú de pruebas -->
     <?endif;?>
@@ -58,6 +62,17 @@
       </ul>
     </li>
     <?endif;?>
+
+    <?if(isset($_SESSION["userName"] ) && $_SESSION["userName"] != "carlos_tejada"):?>
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Definitivas<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+            <li><a target="_blank" href="http://saravena.uniandes.edu.co:8080/sigmasasreports/frameset?__report=sigmasas_reports/entregas/reporteEntregasVUCoordinador.rptdesign" >Reporte de entregas Vida Universitaria</a></li> 
+      </ul>
+    </li>
+    <?endif;?>
+
+
     <?if(isset($_SESSION["role"] ) && $_SESSION["role"] == "ADMIN"):?>
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Opciones administrativas <span class="caret"></span></a>
